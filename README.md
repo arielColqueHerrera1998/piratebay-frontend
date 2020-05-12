@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Piratebay
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.23.
@@ -25,3 +26,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+=======
+# piratebay-frontend
+basic application for a video rent store 
+>>>>>>> 24c6fc6e3b247a23540c4ee8d3a008aa5c84ad91
