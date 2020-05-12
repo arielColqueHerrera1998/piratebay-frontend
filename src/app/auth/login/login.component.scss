@@ -1,5 +1,45 @@
+$color-primary-gray: #545d7f;
+$color-primary-white: #fff;
+$color-primary-violet: #a7b9ff;
+$color-primary-blue: #5b7dff;
+$color-secondary-blue: #4964cc;
+$color-dark-blue: #2d3e7f;
 .form-border {
-  padding: 25px;
-  border: 5px solid #efefef;
+  padding: 40px 25px 25px 25px;
+  border: 2px solid #efefef;
   border-radius: 20px;
+}
+.center {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.bg {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-image: linear-gradient(
+      rgba($color-primary-gray, 0.5),
+      rgba($color-primary-gray, 0.5)
+    ),
+    url("https://images.pexels.com/photos/1040159/pexels-photo-1040159.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+}
+.title {
+  margin: 30px 0;
+  color: $color-primary-white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-group {
+  .label-input {
+    color: $color-primary-white;
+  }
+}
+.btn-primary {
+  background-color: $color-primary-blue;
+}
+form {
+  width: 100%;
 }
