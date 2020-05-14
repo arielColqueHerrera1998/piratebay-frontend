@@ -1,0 +1,30 @@
+$color-primary-gray: #545d7f;
+$color-primary-white: #fff;
+$color-primary-violet: #a7b9ff;
+$color-primary-blue: #5b7dff;
+$color-secondary-blue: #4964cc;
+$color-dark-blue: #2d3e7f;
+.bg-primary {
+  background-color: $color-dark-blue !important;
+}
+.navbar {
+  color: $color-primary-white;
+}
+.card-icon {
+  width: 80px;
+  height: 80px;
+  font-size: 100px;
+}
+.card {
+  border: 2.5px solid $color-dark-blue;
+  border-radius: 30px;
+  color: $color-dark-blue;
+  opacity: 0.55;
+  transition: 0.4s;
+  &:hover {
+    background-color: $color-secondary-blue;
+    color: $color-primary-white;
+    border: 0;
+    opacity: 0.6;
+  }
+}
