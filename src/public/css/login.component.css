@@ -1,0 +1,49 @@
+.form-border {
+  padding: 40px 25px 25px 25px;
+  border: 2px solid #efefef;
+  border-radius: 20px;
+}
+
+.center {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.bg {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(84, 93, 127, 0.5)), to(rgba(84, 93, 127, 0.5))), url("https://images.pexels.com/photos/1040159/pexels-photo-1040159.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-image: linear-gradient(rgba(84, 93, 127, 0.5), rgba(84, 93, 127, 0.5)), url("https://images.pexels.com/photos/1040159/pexels-photo-1040159.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+}
+
+.title {
+  margin: 30px 0;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.form-group .label-input {
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #5b7dff;
+}
+
+form {
+  width: 100%;
+}
+/*# sourceMappingURL=login.component.css.map */

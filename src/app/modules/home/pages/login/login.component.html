@@ -16,8 +16,10 @@
             <input
               type="text"
               class="form-control"
-              id="inputPassword"
+              id="inputName"
               placeholder="Nombre"
+              [(ngModel)]="nombreUsuario"
+              name="username"
             />
           </div>
         </div>
@@ -31,11 +33,17 @@
               class="form-control"
               id="inputPassword"
               placeholder="Contraseña"
+              [(ngModel)]="contrasenia"
+              name="password"
             />
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary float-right">
+        <button
+          type="submit"
+          (click)="doLogin()"
+          class="btn btn-primary float-right"
+        >
           Ingresar
         </button>
       </form>
