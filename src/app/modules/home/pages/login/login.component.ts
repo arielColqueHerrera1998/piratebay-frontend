@@ -29,7 +29,13 @@ export class LoginComponent implements OnInit {
     resp.subscribe(
       (data) => console.log(this.router.navigate(["/home"]), data),
       (error) => {
-        this.showError(), alert("Error al ingresar");
+        alert(
+          "Error al ingresar nombre o contraseña " +
+            this.nombreUsuario +
+            " : " +
+            this.contrasenia
+        );
+        this.showError();
       }
     );
 
