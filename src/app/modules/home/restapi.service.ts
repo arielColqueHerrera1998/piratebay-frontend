@@ -11,13 +11,12 @@ export class RestapiService {
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
       //"Authorization": " Basic " + btoa(username + ":" + password)
-      Authorization: " Basic " + btoa("username" + ":" + "jperez"),
+      Authorization: " Basic " + btoa("username" + ":" + "password"),
     });
     return this.http.post("http://localhost:8008/api/v1/security/login", {
       username: username,
       password: password,
       //responseType: "text" as "json",
     });
-    console.log("here3");
   }
 }

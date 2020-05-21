@@ -16,6 +16,7 @@ $color-dark-blue: #2d3e7f;
   font-size: 100px;
 }
 .card {
+  cursor: pointer;
   border: 2.5px solid $color-dark-blue;
   border-radius: 30px;
   color: $color-dark-blue;
@@ -27,4 +28,10 @@ $color-dark-blue: #2d3e7f;
     border: 0;
     opacity: 0.6;
   }
+}
+h2{
+  color :  $color-secondary-blue;
+}
+hr{
+  border-top: 2px solid $color-secondary-blue;
 }

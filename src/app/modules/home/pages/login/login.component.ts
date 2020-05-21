@@ -1,6 +1,8 @@
 import { Component, OnInit, ɵConsole } from "@angular/core";
 import { RestapiService } from "../../restapi.service";
 import { Router } from "@angular/router";
+// This lets me use jquery
+declare var $: any;
 
 @Component({
   selector: "app-login",
@@ -18,17 +20,26 @@ export class LoginComponent implements OnInit {
   //   );
   // }
   constructor(private service: RestapiService, private router: Router) {}
-
+  flag: boolean = false;
   ngOnInit() {}
   doLogin() {
     console.log(this.nombreUsuario, this.contrasenia);
     let resp = this.service.login(this.nombreUsuario, this.contrasenia);
     //console.log(resp);
-    resp.subscribe((data) => {
-      console.log("entro link");
-      this.message = data;
-      //console.log("data : "+data);
-      this.router.navigate(["/home"]);
-    });
+    resp.subscribe(
+      (data) => console.log(this.router.navigate(["/home"]), data),
+      (error) => {
+        this.showError(), alert("Error al ingresar");
+      }
+    );
+
+    //this.message = data;
+    //console.log("data : "+data);
+    //this.router.navigate(["/home"]);
+    //});
+  }
+  showError() {
+    this.nombreUsuario = "";
+    this.contrasenia = "";
   }
 }
