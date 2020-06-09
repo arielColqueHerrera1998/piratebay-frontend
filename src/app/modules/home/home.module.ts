@@ -4,11 +4,25 @@ import { HomeComponent } from "./pages/home/home.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterModule } from "@angular/router";
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule  } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { HttpHeaders } from "@angular/common/http";
+import { MatButtonModule, MatCheckboxModule } from "@angular/material";
+import { MatInputModule } from "@angular/material/input";
+import { MatToolbarModule } from "@angular/material/toolbar";
+
 @NgModule({
   declarations: [HomeComponent, LoginComponent],
-  imports: [CommonModule, MatIconModule, RouterModule,FormsModule,HttpClientModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    RouterModule,
+    FormsModule,
+    HttpClientModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatToolbarModule,
+  ],
 })
 export class HomeModule {}
