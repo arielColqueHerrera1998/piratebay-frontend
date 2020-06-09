@@ -42,10 +42,18 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
   <div class="form__button-container-table">
-    <button class="form__button-container-table--button" mat-raised-button>
+    <button
+      class="form__button-container-table--button"
+      mat-raised-button
+      (click)="agregarUsuario()"
+    >
       Agregar usuario
     </button>
-    <button class="form__button-container-table--button" mat-raised-button>
+    <button
+      class="form__button-container-table--button"
+      (click)="actualizarLista()"
+      mat-raised-button
+    >
       Actualizar lista
     </button>
   </div>

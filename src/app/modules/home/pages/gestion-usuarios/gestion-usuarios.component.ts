@@ -1,5 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-
+import { Component, OnInit, Inject } from "@angular/core";
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from "@angular/material/dialog";
+import { AgregarUsuariosComponent } from "./../../dialog/agregar-usuarios/agregar-usuarios.component";
 export interface PeriodicElement {
   id: number;
   nombre: string;
@@ -19,7 +24,17 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class GestionUsuariosComponent implements OnInit {
   displayedColumns: string[] = ["id", "nombre", "correo", "numero"];
   dataSource = ELEMENT_DATA;
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {}
+  agregarUsuario() {
+    console.log("agregar usuario");
+    const dialogRef = this.dialog.open(AgregarUsuariosComponent, {
+      width: "300px",
+    });
+    // this.dialog.open(AgregarUsuariosComponent);
+  }
+  actualizarLista() {
+    console.log("actualizar lista");
+  }
 }

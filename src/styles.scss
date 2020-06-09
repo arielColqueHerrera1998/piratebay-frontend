@@ -57,63 +57,65 @@ form {
   width: 100%;
 }
 
-//inputs
-.mat-form-field {
-  .mat-input-element {
-    color: white !important;
+.login-card {
+  //inputs
+  .mat-form-field {
+    .mat-input-element {
+      color: white !important;
+    }
+    .mat-form-field-label {
+      color: white !important;
+    }
+    .mat-form-field-underline {
+      //@warn: slategray !important;
+    }
+    .mat-form-field-ripple {
+      //background-color: slategray !important;
+    }
+    .mat-form-field-required-marker {
+      color: white !important;
+    }
   }
-  .mat-form-field-label {
-    color: white !important;
-  }
-  .mat-form-field-underline {
-    //@warn: slategray !important;
-  }
-  .mat-form-field-ripple {
-    //background-color: slategray !important;
-  }
-  .mat-form-field-required-marker {
-    color: white !important;
-  }
-}
 
-.mat-form-field.mat-focused {
-  .mat-form-field-label {
+  .mat-form-field.mat-focused {
+    .mat-form-field-label {
+      color: white !important;
+    }
+    .mat-form-field-ripple {
+      //background-color: white !important;
+    }
+    .mat-form-field-required-marker {
+      color: white !important;
+    }
+    .mat-input-element {
+      color: white !important;
+    }
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline {
     color: white !important;
   }
-  .mat-form-field-ripple {
-    //background-color: white !important;
-  }
-  .mat-form-field-required-marker {
+
+  /* focused color */
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
     color: white !important;
   }
-  .mat-input-element {
+
+  /* floating label color */
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
     color: white !important;
   }
-}
+  input:focus {
+    background: none;
+  }
+  // input:-internal-autofill-selected {
+  //   background-color: red !important;
+  // }
 
-.mat-form-field-appearance-outline .mat-form-field-outline {
-  color: white !important;
+  // .mat-input-underline {
+  //   background-color: white !important;
+  // }
 }
-
-/* focused color */
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: white !important;
-}
-
-/* floating label color */
-.mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
-  color: white !important;
-}
-input:focus {
-  background: none;
-}
-// input:-internal-autofill-selected {
-//   background-color: red !important;
-// }
-
-// .mat-input-underline {
-//   background-color: white !important;
-// }
 
 //#inputs
 .form-icon {
@@ -189,5 +191,20 @@ table {
   &__title {
     background-color: $color-secondary-blue;
     color: $color-primary-white;
+  }
+}
+.dialog {
+  &__input {
+    width: 100%;
+  }
+  &__button {
+    &--negative {
+      background-color: $color-primary-gray !important;
+      color: $color-primary-white;
+    }
+    &--positive {
+      background-color: $color-primary-blue !important;
+      color: $color-primary-white;
+    }
   }
 }

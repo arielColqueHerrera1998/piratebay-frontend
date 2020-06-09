@@ -12,9 +12,15 @@ import { MatInputModule } from "@angular/material/input";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { GestionUsuariosComponent } from "./pages/gestion-usuarios/gestion-usuarios.component";
 import { MatTableModule } from "@angular/material/table";
-
+import { MatDialogModule } from "@angular/material/dialog";
+import { AgregarUsuariosComponent } from "./dialog/agregar-usuarios/agregar-usuarios.component";
 @NgModule({
-  declarations: [HomeComponent, LoginComponent, GestionUsuariosComponent],
+  declarations: [
+    HomeComponent,
+    LoginComponent,
+    GestionUsuariosComponent,
+    AgregarUsuariosComponent,
+  ],
   imports: [
     CommonModule,
     MatIconModule,
@@ -26,6 +32,8 @@ import { MatTableModule } from "@angular/material/table";
     MatInputModule,
     MatToolbarModule,
     MatTableModule,
+    MatDialogModule,
   ],
+  entryComponents: [AgregarUsuariosComponent],
 })
 export class HomeModule {}

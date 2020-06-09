@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Agregar Usuarios</h1>
+<div mat-dialog-content class="dialog">
+  <form class="example-form">
+    <mat-form-field class="dialog__input">
+      <mat-label>Nombre de usuario</mat-label>
+      <input matInput placeholder="Nombre" value="" />
+    </mat-form-field>
+    <mat-form-field class="dialog__input">
+      <mat-label>Correo Electronico</mat-label>
+      <input matInput placeholder="Correo" value="" />
+    </mat-form-field>
+    <mat-form-field class="dialog__input">
+      <mat-label>Numero de telefono</mat-label>
+      <input matInput placeholder="Numero" value="" />
+    </mat-form-field>
+  </form>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close class="dialog__button--negative">
+    Cerrar
+  </button>
+  <button mat-button cdkFocusInitial class="dialog__button--positive">
+    Agregar
+  </button>
+</mat-dialog-actions>
