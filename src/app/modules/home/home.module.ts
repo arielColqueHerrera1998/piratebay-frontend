@@ -10,9 +10,11 @@ import { HttpHeaders } from "@angular/common/http";
 import { MatButtonModule, MatCheckboxModule } from "@angular/material";
 import { MatInputModule } from "@angular/material/input";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { GestionUsuariosComponent } from "./pages/gestion-usuarios/gestion-usuarios.component";
+import { MatTableModule } from "@angular/material/table";
 
 @NgModule({
-  declarations: [HomeComponent, LoginComponent],
+  declarations: [HomeComponent, LoginComponent, GestionUsuariosComponent],
   imports: [
     CommonModule,
     MatIconModule,
@@ -23,6 +25,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     MatCheckboxModule,
     MatInputModule,
     MatToolbarModule,
+    MatTableModule,
   ],
 })
 export class HomeModule {}

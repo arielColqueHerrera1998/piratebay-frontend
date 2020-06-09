@@ -7,7 +7,6 @@ import { RestapiService } from './modules/home/restapi.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, HomeModule, AppRoutingModule,HttpClientModule, BrowserAnimationsModule],
