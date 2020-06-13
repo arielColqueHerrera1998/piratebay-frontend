@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: "home",
     children: [
-      { path: "", component: HomeComponent },
+      { path: "", component: HomeComponent,pathMatch: 'full' },
       { path: "gestion-usuarios", component: GestionUsuariosComponent },
     ],
   },
