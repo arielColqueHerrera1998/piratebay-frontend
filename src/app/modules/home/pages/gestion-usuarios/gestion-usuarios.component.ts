@@ -1,20 +1,13 @@
-import { Component, OnInit, Inject } from "@angular/core";
+import { Component, OnInit, Inject, ChangeDetectorRef } from "@angular/core";
+import { RestapiService } from "../../restapi.service";
+import { UsuarioModel } from "./../../../../models/usuario";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
 import { AgregarUsuariosComponent } from "./../../dialog/agregar-usuarios/agregar-usuarios.component";
-export interface PeriodicElement {
-  id: number;
-  nombre: string;
-  correo: string;
-  numero: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { id: 1, nombre: "Hydrogen", correo: "a", numero: "H" },
-];
+import { MatTableDataSource } from "@angular/material";
 
 @Component({
   selector: "app-gestion-usuarios",
@@ -22,11 +15,40 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ["./gestion-usuarios.component.scss"],
 })
 export class GestionUsuariosComponent implements OnInit {
-  displayedColumns: string[] = ["id", "nombre", "correo", "numero"];
-  dataSource = ELEMENT_DATA;
-  constructor(private dialog: MatDialog) {}
+  usuariosLista: UsuarioModel[];
+  //ELEMENT_DATA: UsuarioModel[] = [
+  // { id: 1, nombre: "Hydrogen", email: "a", telefono: "H" , estado:"1"},
+  //];
 
-  ngOnInit() {}
+  displayedColumns: string[] = ["id", "nombre", "correo", "telefono", "estado"];
+  //dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  dataSource = new MatTableDataSource<UsuarioModel>();
+
+  constructor(
+    private service: RestapiService,
+    private dialog: MatDialog,
+    private changeDetectorRefs: ChangeDetectorRef
+  ) {}
+
+  ngOnInit() {
+    this.refresh();
+    console.log("ngoninit");
+  }
+
+  refresh() {
+    // this.myService.doSomething().subscribe((data: UsuarioModel[]) => {
+    //   this.dataSource.data = data;
+    // }
+    this.service.getUserData().subscribe(
+      (data: UsuarioModel[]) => {
+        this.dataSource.data = data;
+      },
+      (error) => {
+        alert("Error al agarrar datos ");
+      }
+    );
+  }
+
   agregarUsuario() {
     console.log("agregar usuario");
     const dialogRef = this.dialog.open(AgregarUsuariosComponent, {
@@ -35,6 +57,8 @@ export class GestionUsuariosComponent implements OnInit {
     // this.dialog.open(AgregarUsuariosComponent);
   }
   actualizarLista() {
+    //this.refresh();
+    console.log(this.usuariosLista.length);
     console.log("actualizar lista");
   }
 }
