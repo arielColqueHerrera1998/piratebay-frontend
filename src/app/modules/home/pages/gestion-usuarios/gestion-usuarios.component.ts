@@ -33,6 +33,7 @@ export class GestionUsuariosComponent implements OnInit {
   ngOnInit() {
     this.refresh();
     console.log("ngoninit");
+ 
   }
 
   refresh() {
@@ -44,7 +45,7 @@ export class GestionUsuariosComponent implements OnInit {
         this.dataSource.data = data;
       },
       (error) => {
-        alert("Error al agarrar datos ");
+        alert("EL token caduco");
       }
     );
   }

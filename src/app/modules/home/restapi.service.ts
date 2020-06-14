@@ -11,23 +11,46 @@ export class RestapiService {
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
       //"Authorization": " Basic " + btoa(username + ":" + password)
-      Authorization: " Basic " + btoa("username" + ":" + "password"),
+      //Authorization: " Basic " + btoa("username" + ":" + "password"),
     });
-    return this.http.post("http://localhost:8008/api/v1/security/login", {
-      username: username,
-      password: password,
-    });
+    return this.http.post(
+      "http://localhost:8008/api/v1/security/login",
+      {
+        username: username,
+        password: password,
+      },
+    );
   }
 
   public getUserData() {
+
+    var tokenUser = localStorage.getItem("token");
+    //console.log("tkn : "+accessTokenObj);
     const reqHeader = new HttpHeaders({
       "Content-Type": "application/json",
       Authorization:
-        "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmZWF0dXJlcyI6WyJCVVRUT05fREVMRVRFX1VTRVIiLCJQQUdFX1VTRVJfTUFOQUdFTUVOVCIsIlBST0RVQ1RfTUFOQUdNRU5UIl0sInN1YiI6IjIiLCJpc3MiOiJQaXJhdGViYXkiLCJ0eXBlIjoiQVVUSE4iLCJleHAiOjE1OTIwODE4NDZ9.65EGCVQO6XC8sUrW9G2_L-MxJ9fQbwuqXbt8rpmfJBo",
+        "bearer "+tokenUser,
     });
 
     return this.http.get<UsuarioModel[]>("http://localhost:8008/api/v1/user", {
       headers: reqHeader,
     });
   }
+  // public generateToken(request) {
+  //   return this.http.post(
+  //     "http://localhost:8008/api/v1/security/login",
+  //     request,
+  //     {
+  //       responseType: "text" as "json",
+  //     }
+  //   );
+  // }
+  // public welcome(token) {
+  //   let tokenStr = "bearer " + token;
+  //   const headers = new HttpHeaders().set("Authorization", tokenStr);
+  //   return this.http.get("http://localhost:8008/", {
+  //     headers,
+  //     responseType: "text" as "json",
+  //   });
+  // }
 }
