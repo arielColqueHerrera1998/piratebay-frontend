@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, ChangeDetectorRef } from "@angular/core";
 import { RestapiService } from "../../restapi.service";
 import { UsuarioModel } from "./../../../../models/usuario";
+import { Router, ActivatedRoute } from "@angular/router";
 import {
   MatDialog,
   MatDialogRef,
@@ -27,25 +28,37 @@ export class GestionUsuariosComponent implements OnInit {
   constructor(
     private service: RestapiService,
     private dialog: MatDialog,
-    private changeDetectorRefs: ChangeDetectorRef
+    private changeDetectorRefs: ChangeDetectorRef,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    var x = localStorage.getItem("token");
+    if (x == null) {
+      this.router.navigate(["/"]);
+    }
     this.refresh();
     console.log("ngoninit");
- 
   }
 
   refresh() {
-    // this.myService.doSomething().subscribe((data: UsuarioModel[]) => {
-    //   this.dataSource.data = data;
+    var x = localStorage.getItem("token");
+    // if (x) {
+    //   //Proceed in the application
+    // } else {
     // }
     this.service.getUserData().subscribe(
       (data: UsuarioModel[]) => {
         this.dataSource.data = data;
       },
       (error) => {
-        alert("EL token caduco");
+        if (x != null) {
+          alert("EL token caduco");
+          localStorage.removeItem("token");
+          localStorage.removeItem("refresh");
+          this.router.navigate(["/"]);
+        }
       }
     );
   }

@@ -13,44 +13,31 @@ export class RestapiService {
       //"Authorization": " Basic " + btoa(username + ":" + password)
       //Authorization: " Basic " + btoa("username" + ":" + "password"),
     });
-    return this.http.post(
-      "http://localhost:8008/api/v1/security/login",
-      {
-        username: username,
-        password: password,
-      },
-    );
+    return this.http.post("http://localhost:8008/api/v1/security/login", {
+      username: username,
+      password: password,
+    });
+  }
+
+  public refresh(refreshToken: string) {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+    });
+    return this.http.post("http://localhost:8008/api/v1/security/refresh", {
+      refreshToken: refreshToken,
+    });
   }
 
   public getUserData() {
-
     var tokenUser = localStorage.getItem("token");
     //console.log("tkn : "+accessTokenObj);
     const reqHeader = new HttpHeaders({
       "Content-Type": "application/json",
-      Authorization:
-        "bearer "+tokenUser,
+      Authorization: "bearer " + tokenUser,
     });
 
     return this.http.get<UsuarioModel[]>("http://localhost:8008/api/v1/user", {
       headers: reqHeader,
     });
   }
-  // public generateToken(request) {
-  //   return this.http.post(
-  //     "http://localhost:8008/api/v1/security/login",
-  //     request,
-  //     {
-  //       responseType: "text" as "json",
-  //     }
-  //   );
-  // }
-  // public welcome(token) {
-  //   let tokenStr = "bearer " + token;
-  //   const headers = new HttpHeaders().set("Authorization", tokenStr);
-  //   return this.http.get("http://localhost:8008/", {
-  //     headers,
-  //     responseType: "text" as "json",
-  //   });
-  // }
 }
