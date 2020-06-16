@@ -5,13 +5,19 @@ import { UsuarioModel } from "./../../models/usuario";
   providedIn: "root",
 })
 export class RestapiService {
+  private readonly JWT_TOKEN = 'JWT_TOKEN';
+  private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
+  private loggedUser: string;
+
+
+
+
+
   constructor(private http: HttpClient) {}
 
   public login(username: string, password: string) {
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
-      //"Authorization": " Basic " + btoa(username + ":" + password)
-      //Authorization: " Basic " + btoa("username" + ":" + "password"),
     });
     return this.http.post("http://localhost:8008/api/v1/security/login", {
       username: username,
@@ -40,4 +46,11 @@ export class RestapiService {
       headers: reqHeader,
     });
   }
+
+  public removeTokens(){
+    localStorage.removeItem("token");
+    localStorage.removeItem("refresh");
+  }
+
+  
 }

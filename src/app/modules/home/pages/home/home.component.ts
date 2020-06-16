@@ -18,15 +18,13 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     var x = localStorage.getItem("token");
     if (x == null) {
+      alert("No se tienen tokens");
       this.router.navigate(["/"]);
-    }
-    if (localStorage.getItem("token")) {
-      alert("expired");
+    } else {
       this.refreshTokens();
     }
   }
   irGestionUsuario() {
-    console.log("gestion usuarios");
     this.router.navigate(["gestion-usuarios"], { relativeTo: this.route });
     //this.router.navigate(["gestion-usuarios"], { relativeTo: this.route });
   }
@@ -34,13 +32,13 @@ export class HomeComponent implements OnInit {
     console.log("gestion productos");
   }
   salir() {
-    console.log("salir");
+    this.service.removeTokens();
+    this.router.navigate(["/"]);
   }
 
   refreshTokens() {
     var tokenUsuario = localStorage.getItem("refresh");
     let resp = this.service.refresh(tokenUsuario);
-    //console.log(resp);
     resp.subscribe(
       (data) => {
         console.log(data);
@@ -57,10 +55,12 @@ export class HomeComponent implements OnInit {
         //.log("us:" + this.tokenUser);
         localStorage.setItem("token", this.nuevoTokenUsuario);
         localStorage.setItem("refresh", this.nuevoTokenRefresh);
-        alert("Tokens refrescados ");
+        console.log("Tokens refrescados ");
       },
       (error) => {
-        alert("Error al hacer refresh ");
+        console.log("Timeout token refresh");
+        this.service.removeTokens();
+        this.router.navigate(["/"]);
       }
     );
   }

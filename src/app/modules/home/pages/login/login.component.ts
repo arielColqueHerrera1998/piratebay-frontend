@@ -21,7 +21,10 @@ export class LoginComponent implements OnInit {
   constructor(private service: RestapiService, private router: Router) {}
   flag: boolean = false;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.service.removeTokens();
+
+  }
   doLogin() {
     var name: string;
     console.log(this.nombreUsuario, this.contrasenia);

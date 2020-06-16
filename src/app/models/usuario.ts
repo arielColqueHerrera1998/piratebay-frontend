@@ -1,7 +1,7 @@
 export class UsuarioModel {
-    userId: number;
   username: string;
   email: string;
+  contrasenia : string;
   phoneNumber: string;
   carUserStatus: string;
 }

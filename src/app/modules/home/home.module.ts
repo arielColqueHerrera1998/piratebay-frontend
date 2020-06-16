@@ -14,6 +14,7 @@ import { GestionUsuariosComponent } from "./pages/gestion-usuarios/gestion-usuar
 import { MatTableModule } from "@angular/material/table";
 import { MatDialogModule } from "@angular/material/dialog";
 import { AgregarUsuariosComponent } from "./dialog/agregar-usuarios/agregar-usuarios.component";
+
 @NgModule({
   declarations: [
     HomeComponent,

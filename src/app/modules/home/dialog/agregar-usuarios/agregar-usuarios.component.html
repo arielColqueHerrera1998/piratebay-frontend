@@ -3,15 +3,29 @@
   <form class="example-form">
     <mat-form-field class="dialog__input">
       <mat-label>Nombre de usuario</mat-label>
-      <input matInput placeholder="Nombre" value="" />
+      <input
+        matInput
+        placeholder="Nombre"
+        name="nombreUsuario"
+        [(ngModel)]="usuario.username"
+      />
+    </mat-form-field>
+    <mat-form-field class="dialog__input">
+      <mat-label>Contrasenia</mat-label>
+      <input matInput placeholder="Contrasenia" name="contrasenia" [(ngModel)]="usuario.contrasenia" />
     </mat-form-field>
     <mat-form-field class="dialog__input">
       <mat-label>Correo Electronico</mat-label>
-      <input matInput placeholder="Correo" value="" />
+      <input matInput placeholder="Correo" name="correo" [(ngModel)]="usuario.email" />
     </mat-form-field>
     <mat-form-field class="dialog__input">
       <mat-label>Numero de telefono</mat-label>
-      <input matInput placeholder="Numero" value="" />
+      <input
+        matInput
+        placeholder="Numero"
+        name="numeroTelefono"
+        [(ngModel)]="usuario.phoneNumber"
+      />
     </mat-form-field>
   </form>
 </div>
@@ -19,7 +33,12 @@
   <button mat-button mat-dialog-close class="dialog__button--negative">
     Cerrar
   </button>
-  <button mat-button cdkFocusInitial class="dialog__button--positive">
+  <button
+    mat-button
+    cdkFocusInitial
+    class="dialog__button--positive"
+    (click)="agregarUsuario()"
+  >
     Agregar
   </button>
 </mat-dialog-actions>

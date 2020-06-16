@@ -17,6 +17,8 @@ import { MatTableDataSource } from "@angular/material";
 })
 export class GestionUsuariosComponent implements OnInit {
   usuariosLista: UsuarioModel[];
+  nuevoTokenUsuario: string;
+  nuevoTokenRefresh: string;
   //ELEMENT_DATA: UsuarioModel[] = [
   // { id: 1, nombre: "Hydrogen", email: "a", telefono: "H" , estado:"1"},
   //];
@@ -37,26 +39,23 @@ export class GestionUsuariosComponent implements OnInit {
     var x = localStorage.getItem("token");
     if (x == null) {
       this.router.navigate(["/"]);
+      alert("No se tienen tokens");
+    } else {
+      this.refresh();
     }
-    this.refresh();
-    console.log("ngoninit");
   }
 
   refresh() {
     var x = localStorage.getItem("token");
-    // if (x) {
-    //   //Proceed in the application
-    // } else {
-    // }
     this.service.getUserData().subscribe(
       (data: UsuarioModel[]) => {
         this.dataSource.data = data;
+        this.refreshTokens();
       },
       (error) => {
         if (x != null) {
           alert("EL token caduco");
-          localStorage.removeItem("token");
-          localStorage.removeItem("refresh");
+          this.service.removeTokens();
           this.router.navigate(["/"]);
         }
       }
@@ -68,11 +67,39 @@ export class GestionUsuariosComponent implements OnInit {
     const dialogRef = this.dialog.open(AgregarUsuariosComponent, {
       width: "300px",
     });
-    // this.dialog.open(AgregarUsuariosComponent);
   }
   actualizarLista() {
     //this.refresh();
     console.log(this.usuariosLista.length);
     console.log("actualizar lista");
+  }
+
+  refreshTokens() {
+    var tokenUsuario = localStorage.getItem("refresh");
+    let resp = this.service.refresh(tokenUsuario);
+    resp.subscribe(
+      (data) => {
+        console.log(data);
+        for (let key in data) {
+          if (key == "refresh ") {
+            this.nuevoTokenRefresh = data[key];
+          }
+          if (key == "authentication ") {
+            this.nuevoTokenUsuario = data[key];
+          }
+          //console.log ('key: ' +  key + ',  value: ' + data[key]);
+        }
+        //console.log("re:" + this.tokenRefresh);
+        //.log("us:" + this.tokenUser);
+        localStorage.setItem("token", this.nuevoTokenUsuario);
+        localStorage.setItem("refresh", this.nuevoTokenRefresh);
+        console.log("Tokens refrescados ");
+      },
+      (error) => {
+        console.log("Timeout token refresh");
+        this.service.removeTokens();
+        this.router.navigate(["/"]);
+      }
+    );
   }
 }
