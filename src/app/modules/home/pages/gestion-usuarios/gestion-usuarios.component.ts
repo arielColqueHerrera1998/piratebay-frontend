@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ChangeDetectorRef } from "@angular/core";
 import { RestapiService } from "../../restapi.service";
 import { UsuarioModel } from "./../../../../models/usuario";
 import { Router, ActivatedRoute } from "@angular/router";
+import * as jwt_decode from "jwt-decode";
 import {
   MatDialog,
   MatDialogRef,
@@ -16,15 +17,12 @@ import { MatTableDataSource } from "@angular/material";
   styleUrls: ["./gestion-usuarios.component.scss"],
 })
 export class GestionUsuariosComponent implements OnInit {
+  mostrarGestion: boolean = false;
   usuariosLista: UsuarioModel[];
   nuevoTokenUsuario: string;
   nuevoTokenRefresh: string;
-  //ELEMENT_DATA: UsuarioModel[] = [
-  // { id: 1, nombre: "Hydrogen", email: "a", telefono: "H" , estado:"1"},
-  //];
 
   displayedColumns: string[] = ["id", "nombre", "correo", "telefono", "estado"];
-  //dataSource = new MatTableDataSource(this.ELEMENT_DATA);
   dataSource = new MatTableDataSource<UsuarioModel>();
 
   constructor(
@@ -37,27 +35,24 @@ export class GestionUsuariosComponent implements OnInit {
 
   ngOnInit() {
     var x = localStorage.getItem("token");
+    // console.log("token actual:" + x);
     if (x == null) {
       this.router.navigate(["/"]);
       alert("No se tienen tokens");
     } else {
-      this.refresh();
+      this.refreshTokens();
+      var tokenUser = localStorage.getItem("token");
     }
   }
 
-  refresh() {
-    var x = localStorage.getItem("token");
+  refreshTable() {
+    console.log("refrescando tabla");
     this.service.getUserData().subscribe(
       (data: UsuarioModel[]) => {
         this.dataSource.data = data;
-        this.refreshTokens();
       },
       (error) => {
-        if (x != null) {
-          alert("EL token caduco");
-          this.service.removeTokens();
-          this.router.navigate(["/"]);
-        }
+        console.log("error con la tabla");
       }
     );
   }
@@ -69,9 +64,16 @@ export class GestionUsuariosComponent implements OnInit {
     });
   }
   actualizarLista() {
-    //this.refresh();
     console.log(this.usuariosLista.length);
     console.log("actualizar lista");
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
   }
 
   refreshTokens() {
@@ -87,13 +89,28 @@ export class GestionUsuariosComponent implements OnInit {
           if (key == "authentication ") {
             this.nuevoTokenUsuario = data[key];
           }
-          //console.log ('key: ' +  key + ',  value: ' + data[key]);
+          //console.log("key gestion: " + key + ",  value: " + data[key]);
         }
-        //console.log("re:" + this.tokenRefresh);
-        //.log("us:" + this.tokenUser);
+        let tokenInfo = this.getDecodedAccessToken(this.nuevoTokenUsuario); // decode token
+        let expireDate = tokenInfo.exp; // get token expiration dateTime
+        //console.log(tokenInfo);
+
+        for (let keyInfo in tokenInfo) {
+          if (keyInfo == "features") {
+            var informacionToken = tokenInfo[keyInfo];
+            for (var i = 0; i < informacionToken.length; i++) {
+              if (informacionToken[i] == "PAGE_USER_MANAGEMENT") {
+                console.log("page user management logged");
+                this.mostrarGestion = true;
+              } else {
+              }
+            }
+          }
+        }
         localStorage.setItem("token", this.nuevoTokenUsuario);
         localStorage.setItem("refresh", this.nuevoTokenRefresh);
-        console.log("Tokens refrescados ");
+        //console.log("Tokens refrescados en gestion ");
+        this.refreshTable();
       },
       (error) => {
         console.log("Timeout token refresh");

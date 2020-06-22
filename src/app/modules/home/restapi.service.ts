@@ -9,10 +9,6 @@ export class RestapiService {
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   private loggedUser: string;
 
-
-
-
-
   constructor(private http: HttpClient) {}
 
   public login(username: string, password: string) {
@@ -36,12 +32,11 @@ export class RestapiService {
 
   public getUserData() {
     var tokenUser = localStorage.getItem("token");
-    //console.log("tkn : "+accessTokenObj);
+    console.log("tkn get user data: "+tokenUser);
     const reqHeader = new HttpHeaders({
       "Content-Type": "application/json",
       Authorization: "bearer " + tokenUser,
     });
-
     return this.http.get<UsuarioModel[]>("http://localhost:8008/api/v1/user", {
       headers: reqHeader,
     });
