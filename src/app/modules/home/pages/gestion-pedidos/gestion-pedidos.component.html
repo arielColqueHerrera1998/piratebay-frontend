@@ -1,0 +1,83 @@
+<mat-toolbar class="navbar navbar-expand-lg navbar-light bg-primary">
+  <div class="container">
+    <h1>PirateBay - Pedidos</h1>
+  </div>
+</mat-toolbar>
+<div class="container">
+  <h2 class="">Gestion Pedidos</h2>
+  <!--tabs-->
+  <mat-tab-group mat-align-tabs="start" class="angular-tabs">
+    <mat-tab label="Pagado">
+      <h3 class="">Tabla de Pedidos Pagados</h3>
+      <br />
+      <!--tabla-->
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="numOrd">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Numero Orden
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.numeroOrden }}</td>
+        </ng-container>
+
+        <!--nombre Cliente -->
+        <ng-container matColumnDef="nomCli">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Nombre Cliente
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nombreCliente }}
+          </td>
+        </ng-container>
+
+        <!-- nombr de pelicula -->
+        <ng-container matColumnDef="nomPel">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Nombre de Pelicula
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nombrePelicula }}
+          </td>
+        </ng-container>
+        <!-- fehca de solicitud -->
+        <ng-container matColumnDef="fecSol">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Fecha de solicitud
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fechaSolicitud }}
+          </td>
+        </ng-container>
+        <!-- Fecha de pago -->
+        <ng-container matColumnDef="fecPag">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Fecha de Pago
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.fechaPago }}</td>
+        </ng-container>
+        <!-- Detalle -->
+        <ng-container matColumnDef="detPed">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Detalle Pedido
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-raised-button
+              type="submit"
+              class="form__button-container--button"
+              (click)="detallePedidoPagado()"
+            >
+              Detalle
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <!--#tabla-->
+    </mat-tab>
+    <mat-tab label="Preparado">Content 2</mat-tab>
+    <mat-tab label="Despachados">Content 3</mat-tab>
+    <mat-tab label="Entregados">Content 4</mat-tab>
+  </mat-tab-group>
+  <!--#tabs-->
+</div>

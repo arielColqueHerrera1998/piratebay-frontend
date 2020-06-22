@@ -181,6 +181,10 @@ h2 {
   color: $color-secondary-blue;
   font-size: 1.5rem;
 }
+h3 {
+  color: $color-secondary-blue;
+  font-size: 1rem;
+}
 hr {
   border-top: 2px solid $color-secondary-blue;
 }
@@ -208,3 +212,69 @@ table {
     }
   }
 }
+.mat-tab-group.mat-primary .mat-ink-bar {
+  background-color: $color-primary-blue !important;
+}
+.angular-tabs {
+  .mat-tab-label {
+    color: $color-dark-blue !important;
+  }
+}
+th.mat-header-cell,
+td.mat-cell {
+  text-align: center !important;
+}
+
+//detalles de dialog pedido
+.dialog-pedido-detalle {
+  margin: 7.5px 0px;
+  box-shadow: 1px 2px 10px 0 $color-primary-gray !important;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 20px 30px;
+  &__cuerpo {
+    //background-color: orange;
+    display: flex;
+    &-icono {
+      display: flex;
+      color: $color-dark-blue;
+      flex: 0 1 20%;
+      font-size: 36px;
+      justify-content: center;
+      align-items: center;
+    }
+    &-contenido {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      //background-color: red;
+      &-informacion {
+        margin: 5px 0px;
+        justify-content: space-between;
+        align-items: center;
+        //background-color: yellow;
+        display: flex;
+        &--subtitulo {
+          font-weight: bold;
+          color: $color-dark-blue;
+        }
+        &--text {
+          color: $color-dark-blue;
+        }
+      }
+    }
+  }
+  &__problema {
+    .example-form {
+      min-width: 150px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .example-full-width {
+      width: 100%;
+    }
+    //background-color: red;
+  }
+}
+//-#detalle de dialog pedido

@@ -11,9 +11,13 @@ import { MatButtonModule, MatCheckboxModule } from "@angular/material";
 import { MatInputModule } from "@angular/material/input";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { GestionUsuariosComponent } from "./pages/gestion-usuarios/gestion-usuarios.component";
+import { GestionPedidosComponent } from "./pages/gestion-pedidos/gestion-pedidos.component";
 import { MatTableModule } from "@angular/material/table";
 import { MatDialogModule } from "@angular/material/dialog";
 import { AgregarUsuariosComponent } from "./dialog/agregar-usuarios/agregar-usuarios.component";
+import { MatTabsModule } from "@angular/material/tabs";
+import { DetallesPedidoComponent } from "./dialog/detalles-pedido/detalles-pedido.component";
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -21,6 +25,8 @@ import { AgregarUsuariosComponent } from "./dialog/agregar-usuarios/agregar-usua
     LoginComponent,
     GestionUsuariosComponent,
     AgregarUsuariosComponent,
+    GestionPedidosComponent,
+    DetallesPedidoComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +40,9 @@ import { AgregarUsuariosComponent } from "./dialog/agregar-usuarios/agregar-usua
     MatToolbarModule,
     MatTableModule,
     MatDialogModule,
+    MatTabsModule,
+    MatSelectModule,
   ],
-  entryComponents: [AgregarUsuariosComponent],
+  entryComponents: [AgregarUsuariosComponent, DetallesPedidoComponent],
 })
 export class HomeModule {}

@@ -32,7 +32,7 @@ export class RestapiService {
 
   public getUserData() {
     var tokenUser = localStorage.getItem("token");
-    console.log("tkn get user data: "+tokenUser);
+    //console.log("tkn get user data: "+tokenUser);
     const reqHeader = new HttpHeaders({
       "Content-Type": "application/json",
       Authorization: "bearer " + tokenUser,

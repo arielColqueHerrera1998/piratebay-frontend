@@ -8,7 +8,7 @@ import * as jwt_decode from "jwt-decode";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
-  mostrarGestion: boolean=false;
+  mostrarGestion: boolean = false;
   nuevoTokenUsuario: string;
   nuevoTokenRefresh: string;
   constructor(
@@ -26,13 +26,15 @@ export class HomeComponent implements OnInit {
       this.refreshTokens();
     }
   }
+
   irGestionUsuario() {
     this.router.navigate(["gestion-usuarios"], { relativeTo: this.route });
-    //this.router.navigate(["gestion-usuarios"], { relativeTo: this.route });
   }
-  irGestionProductos() {
-    console.log("gestion productos");
+
+  irGestionPedidos() {
+    this.router.navigate(["gestion-pedidos"], { relativeTo: this.route });
   }
+
   salir() {
     this.service.removeTokens();
     this.router.navigate(["/"]);
@@ -51,15 +53,12 @@ export class HomeComponent implements OnInit {
           if (key == "authentication ") {
             this.nuevoTokenUsuario = data[key];
           }
-          //console.log ('key: ' +  key + ',  value: ' + data[key]);
         }
-        //console.log("re:" + this.tokenRefresh);
-        //.log("us:" + this.tokenUser);
         let tokenInfo = this.getDecodedAccessToken(this.nuevoTokenUsuario); // decode token
         let expireDate = tokenInfo.exp; // get token expiration dateTime
-        console.log(tokenInfo);
-        console.log("expire token:" + expireDate);
-        console.log("----------------");
+        //console.log(tokenInfo);
+        //console.log("expire token:" + expireDate);
+        //console.log("----------------");
         for (let keyInfo in tokenInfo) {
           if (keyInfo == "features") {
             var informacionToken = tokenInfo[keyInfo];
@@ -82,7 +81,7 @@ export class HomeComponent implements OnInit {
         }
         localStorage.setItem("token", this.nuevoTokenUsuario);
         localStorage.setItem("refresh", this.nuevoTokenRefresh);
-        console.log("Tokens refrescados ");
+        //console.log("Tokens refrescados ");
       },
       (error) => {
         console.log("Timeout token refresh");

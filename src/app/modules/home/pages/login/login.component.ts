@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   }
   doLogin() {
     var name: string;
-    console.log(this.nombreUsuario, this.contrasenia);
+    //console.log(this.nombreUsuario, this.contrasenia);
     let resp = this.service.login(this.nombreUsuario, this.contrasenia);
     //console.log(resp);
     resp.subscribe(
