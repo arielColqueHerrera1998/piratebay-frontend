@@ -236,8 +236,12 @@ td.mat-cell {
     //background-color: orange;
     display: flex;
     &-icono {
+      margin-right: 10px;
+      margin-bottom: 10px;
+      background-color: $color-dark-blue;
+      border-radius: 10px;
       display: flex;
-      color: $color-dark-blue;
+      color: $color-primary-white;
       flex: 0 1 20%;
       font-size: 36px;
       justify-content: center;

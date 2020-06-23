@@ -7,11 +7,15 @@
   <h2 class="">Gestion Pedidos</h2>
   <!--tabs-->
   <mat-tab-group mat-align-tabs="start" class="angular-tabs">
-    <mat-tab label="Pagado">
-      <h3 class="">Tabla de Pedidos Pagados</h3>
+    <mat-tab label="Pendientes">
+      <h3 class="">Tabla de Pedidos Pendientes</h3>
       <br />
       <!--tabla-->
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <table
+        mat-table
+        [dataSource]="dataSourceTablaPendientes"
+        class="mat-elevation-z8"
+      >
         <ng-container matColumnDef="numOrd">
           <th mat-header-cell *matHeaderCellDef class="table__title">
             Numero Orden
@@ -26,16 +30,6 @@
           </th>
           <td mat-cell *matCellDef="let element">
             {{ element.nombreCliente }}
-          </td>
-        </ng-container>
-
-        <!-- nombr de pelicula -->
-        <ng-container matColumnDef="nomPel">
-          <th mat-header-cell *matHeaderCellDef class="table__title">
-            Nombre de Pelicula
-          </th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.nombrePelicula }}
           </td>
         </ng-container>
         <!-- fehca de solicitud -->
@@ -75,9 +69,185 @@
       </table>
       <!--#tabla-->
     </mat-tab>
-    <mat-tab label="Preparado">Content 2</mat-tab>
-    <mat-tab label="Despachados">Content 3</mat-tab>
-    <mat-tab label="Entregados">Content 4</mat-tab>
+    <!--label mat-->
+    <mat-tab label="Preparando">
+      <h3 class="">Tabla de Pedidos en Preparacion</h3>
+      <br />
+      <!--tabla-->
+      <table
+        mat-table
+        [dataSource]="dataSourceTablaPreparando"
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="numOrd">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Numero Orden
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.numeroOrden }}</td>
+        </ng-container>
+
+        <!--nombre Cliente -->
+        <ng-container matColumnDef="nomCli">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Nombre Cliente
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nombreCliente }}
+          </td>
+        </ng-container>
+
+        <!-- fehca de recepcion -->
+        <ng-container matColumnDef="fecRec">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Fecha de solicitud
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fechaRecepcion }}
+          </td>
+        </ng-container>
+        <!-- Detalle -->
+        <ng-container matColumnDef="detPed">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Detalle Pedido
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-raised-button
+              type="submit"
+              class="form__button-container--button"
+              (click)="detallePedidoPagado()"
+            >
+              Detalle
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsPreparando"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumnsPreparando"
+        ></tr>
+      </table>
+      <!--#tabla-->
+    </mat-tab>
+    <!--label mat-->
+    <mat-tab label="Preparados">
+      <h3 class="">Tabla de Pedidos Preparados</h3>
+      <br />
+      <!--tabla-->
+      <table
+        mat-table
+        [dataSource]="dataSourceTablaPreparado"
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="numOrd">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Numero Orden
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.numeroOrden }}</td>
+        </ng-container>
+
+        <!--nombre Cliente -->
+        <ng-container matColumnDef="nomCli">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Nombre Cliente
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nombreCliente }}
+          </td>
+        </ng-container>
+
+        <!-- fehca de recepcion -->
+        <ng-container matColumnDef="fecPrep">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Fecha de Preparacion
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fechaPreparacion }}
+          </td>
+        </ng-container>
+        <!-- Detalle -->
+        <ng-container matColumnDef="detPed">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Detalle Pedido
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-raised-button
+              type="submit"
+              class="form__button-container--button"
+              (click)="detallePedidoPagado()"
+            >
+              Detalle
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsPreparado"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumnsPreparado"
+        ></tr>
+      </table>
+      <!--#tabla-->
+    </mat-tab>
+    <mat-tab label="Despachados">
+      <h3 class="">Tabla de Pedidos Despachados</h3>
+      <br />
+      <!--tabla-->
+      <table
+        mat-table
+        [dataSource]="dataSourceTablaDespachado"
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="numOrd">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Numero Orden
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.numeroOrden }}</td>
+        </ng-container>
+
+        <!--nombre Cliente -->
+        <ng-container matColumnDef="nomCli">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Nombre Cliente
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nombreCliente }}
+          </td>
+        </ng-container>
+
+        <!-- fehca de recepcion -->
+        <ng-container matColumnDef="fecPreparado">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Fecha de Preparado
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fechaPreparado }}
+          </td>
+        </ng-container>
+        <!-- Detalle -->
+        <ng-container matColumnDef="detPed">
+          <th mat-header-cell *matHeaderCellDef class="table__title">
+            Detalle Pedido
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-raised-button
+              type="submit"
+              class="form__button-container--button"
+              (click)="detallePedidoPagado()"
+            >
+              Detalle
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsDespachados"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumnsDespachados"
+        ></tr>
+      </table>
+      <!--#tabla-->
+    </mat-tab>
   </mat-tab-group>
   <!--#tabs-->
 </div>

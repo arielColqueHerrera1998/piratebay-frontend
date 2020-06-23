@@ -1,66 +1,76 @@
-<h1 mat-dialog-title>Detalles de Pedido | Orden Nro : 24123</h1>
+<h1 mat-dialog-title>
+  Detalles de Pedido | Orden Nro : {{ solicitudPedido.idPedido }}
+</h1>
 <div mat-dialog-content class="dialog">
-  <div class="dialog-pedido-detalle">
-    <div class="dialog-pedido-detalle__cuerpo">
-      <div class="dialog-pedido-detalle__cuerpo-icono">
-        <mat-icon
-          [inline]="true"
-          class="dialog-pedido-detalle__cuerpo-icono--icon"
-          >videocam</mat-icon
-        >
+  <div
+    class=""
+    *ngFor="
+      let listaPeliculasSolicitadas of solicitudPedido.solicitudPelicula;
+      let i = index
+    "
+  >
+    <div class="dialog-pedido-detalle">
+      <div class="dialog-pedido-detalle__cuerpo">
+        <div class="dialog-pedido-detalle__cuerpo-icono">
+          <mat-icon
+            [inline]="true"
+            class="dialog-pedido-detalle__cuerpo-icono--icon"
+            >videocam</mat-icon
+          >
+        </div>
+        <div class="dialog-pedido-detalle__cuerpo-contenido">
+          <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
+            <div
+              class="dialog-pedido-detalle__cuerpo-contenido-informacion--subtitulo"
+            >
+              Nombre de Pelicula :
+            </div>
+            <div
+              class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
+            >
+              {{ solicitudPedido.solicitudPelicula[i].nombrePelicula }}
+            </div>
+          </div>
+          <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
+            <div
+              class="dialog-pedido-detalle__cuerpo-contenido-informacion--subtitulo"
+            >
+              Cantidad Solicitada :
+            </div>
+            <div
+              class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
+            >
+              {{ solicitudPedido.solicitudPelicula[i].cantidadSolicitada }}
+            </div>
+          </div>
+          <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
+            <div
+              class="dialog-pedido-detalle__cuerpo-contenido-informacion--subtitulo"
+            ></div>
+            <div
+              class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
+            >
+              <mat-form-field>
+                <mat-label>Cantidad a Entregar</mat-label>
+                <mat-select>
+                  <mat-option
+                    *ngFor="let disponible of cantidadDisponible"
+                    [value]="disponible.value"
+                  >
+                    {{ disponible.viewValue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="dialog-pedido-detalle__cuerpo-contenido">
-        <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
-          <div
-            class="dialog-pedido-detalle__cuerpo-contenido-informacion--subtitulo"
-          >
-            Nombre de Pelicula :
-          </div>
-          <div
-            class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
-          >
-            Toy Story
-          </div>
-        </div>
-        <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
-          <div
-            class="dialog-pedido-detalle__cuerpo-contenido-informacion--subtitulo"
-          >
-            Cantidad Solicitada :
-          </div>
-          <div
-            class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
-          >
-            5
-          </div>
-        </div>
-        <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
-          <div
-            class="dialog-pedido-detalle__cuerpo-contenido-informacion--subtitulo"
-          ></div>
-          <div
-            class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
-          >
-            <mat-form-field>
-              <mat-label>Cantidad a Entregar</mat-label>
-              <mat-select>
-                <mat-option
-                  *ngFor="let disponible of cantidadDisponible"
-                  [value]="disponible.value"
-                >
-                  {{ disponible.viewValue }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
+      <div class="dialog-pedido-detalle__problema">
+        <mat-form-field class="example-full-width">
+          <mat-label>Reportar Problema</mat-label>
+          <textarea matInput placeholder="Problemas?"></textarea>
+        </mat-form-field>
       </div>
-    </div>
-    <div class="dialog-pedido-detalle__problema">
-      <mat-form-field class="example-full-width">
-        <mat-label>Reportar Problema</mat-label>
-        <textarea matInput placeholder="Problemas?"></textarea>
-      </mat-form-field>
     </div>
   </div>
 </div>
@@ -69,6 +79,6 @@
     Cerrar
   </button>
   <button mat-button cdkFocusInitial class="dialog__button--positive">
-    Agregar
+    A preparacion
   </button>
 </mat-dialog-actions>

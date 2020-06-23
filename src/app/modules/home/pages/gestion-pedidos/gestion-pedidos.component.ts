@@ -10,24 +10,78 @@ import { DetallesPedidoComponent } from "./../../dialog/detalles-pedido/detalles
 export interface PedidoPagado {
   numeroOrden: number;
   nombreCliente: string;
-  nombrePelicula: string;
   fechaSolicitud: string;
   fechaPago: string;
 }
+
+export interface PedidoPreparando {
+  numeroOrden: number;
+  nombreCliente: string;
+  fechaRecepcion: string;
+}
+
+export interface PedidoPreparados {
+  numeroOrden: number;
+  nombreCliente: string;
+  fechaPreparacion: string;
+}
+export interface PedidoDespachado {
+  numeroOrden: number;
+  nombreCliente: string;
+  fechaPreparado: string;
+}
+
 const ELEMENT_DATA: PedidoPagado[] = [
   {
     numeroOrden: 1,
     nombreCliente: "Ariel Colque Herrera",
-    nombrePelicula: "Toy Story",
     fechaSolicitud: "12/12/2020",
     fechaPago: "12/12/2020",
   },
   {
     numeroOrden: 2,
     nombreCliente: "Solange Paredes Maximof",
-    nombrePelicula: "Toy Story",
     fechaSolicitud: "12/12/2020",
     fechaPago: "12/12/2020",
+  },
+];
+
+const ELEMENT_DATA_PREPARANDO: PedidoPreparando[] = [
+  {
+    numeroOrden: 1,
+    nombreCliente: "Ariel Colque Herrera",
+    fechaRecepcion: "12/12/2020",
+  },
+  {
+    numeroOrden: 2,
+    nombreCliente: "Solange Paredes Maximof",
+    fechaRecepcion: "12/12/2020",
+  },
+];
+
+const ELEMENT_DATA_PREPARADO: PedidoPreparados[] = [
+  {
+    numeroOrden: 1,
+    nombreCliente: "Ariel Colque Herrera",
+    fechaPreparacion: "12/12/2020",
+  },
+  {
+    numeroOrden: 2,
+    nombreCliente: "Solange Paredes Maximof",
+    fechaPreparacion: "12/12/2020",
+  },
+];
+
+const ELEMENT_DATA_DESPACHADO: PedidoDespachado[] = [
+  {
+    numeroOrden: 1,
+    nombreCliente: "Ariel Colque Herrera",
+    fechaPreparado: "12/12/2020",
+  },
+  {
+    numeroOrden: 2,
+    nombreCliente: "Solange Paredes Maximof",
+    fechaPreparado: "12/12/2020",
   },
 ];
 
@@ -43,12 +97,34 @@ export class GestionPedidosComponent implements OnInit {
   displayedColumns: string[] = [
     "numOrd",
     "nomCli",
-    "nomPel",
     "fecSol",
     "fecPag",
     "detPed",
   ];
-  dataSource = ELEMENT_DATA;
+
+  displayedColumnsPreparando: string[] = [
+    "numOrd",
+    "nomCli",
+    "fecRec",
+    "detPed",
+  ];
+  displayedColumnsPreparado: string[] = [
+    "numOrd",
+    "nomCli",
+    "fecPrep",
+    "detPed",
+  ];
+  displayedColumnsDespachados: string[] = [
+    "numOrd",
+    "nomCli",
+    "fecPreparado",
+    "detPed",
+  ];
+
+  dataSourceTablaPendientes = ELEMENT_DATA;
+  dataSourceTablaPreparando = ELEMENT_DATA_PREPARANDO;
+  dataSourceTablaPreparado = ELEMENT_DATA_PREPARADO;
+  dataSourceTablaDespachado = ELEMENT_DATA_DESPACHADO;
 
   constructor(private dialog: MatDialog) {}
 
