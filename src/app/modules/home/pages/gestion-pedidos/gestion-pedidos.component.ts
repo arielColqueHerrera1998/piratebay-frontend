@@ -92,6 +92,21 @@ const ELEMENT_DATA: SolicitudPedido[] = [
     reporteProblemas: "",
     estado: "pagado",
   },
+  {
+    idPedido: "3",
+    nombreCliente: "Nicole Espinoza Ulloa",
+    fechaSolicitud: "12/12/2020",
+    fechaPago: "12/12/2020",
+    solicitudPelicula: [
+      {
+        idPelicula: "5",
+        nombrePelicula: "Robin",
+        cantidadSolicitada: 1,
+      },
+    ],
+    reporteProblemas: "",
+    estado: "pagado",
+  },
 ];
 
 const ELEMENT_DATA_PREPARANDO: PedidoPreparando[] = [

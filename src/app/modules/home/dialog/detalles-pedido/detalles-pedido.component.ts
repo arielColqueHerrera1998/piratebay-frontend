@@ -26,7 +26,7 @@ export class DetallesPedidoComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
-    console.log("data :" + this.data);
+    //console.log("data :" + this.data);
     this.solicitudPedidoObjeto = this.data.pedidoSolicitado;
   }
 }
