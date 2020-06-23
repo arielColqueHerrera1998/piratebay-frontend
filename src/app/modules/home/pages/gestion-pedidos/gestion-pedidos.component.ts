@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
 import { UsuarioModel } from "./../../../../models/usuario";
+import { SolicitudPelicula } from "../../../../models/SolicitudPelicula";
+import { SolicitudPedido } from "../../../../models/SolicitudPedido";
 import {
   MatDialog,
   MatDialogRef,
@@ -12,6 +14,7 @@ export interface PedidoPagado {
   nombreCliente: string;
   fechaSolicitud: string;
   fechaPago: string;
+  estado: string;
 }
 
 export interface PedidoPreparando {
@@ -31,18 +34,63 @@ export interface PedidoDespachado {
   fechaPreparado: string;
 }
 
-const ELEMENT_DATA: PedidoPagado[] = [
+// const ELEMENT_DATA: SolicitudPedido[] = [
+//   {
+//     numeroOrden: 1,
+//     nombreCliente: "Ariel Colque Herrera",
+//     fechaSolicitud: "12/12/2020",
+//     fechaPago: "12/12/2020",
+//     estado: "pagado",
+//   },
+//   {
+//     numeroOrden: 2,
+//     nombreCliente: "Solange Paredes Maximof",
+//     fechaSolicitud: "12/12/2020",
+//     fechaPago: "12/12/2020",
+//     estado: "pagado",
+//   },
+// ];
+
+const ELEMENT_DATA: SolicitudPedido[] = [
   {
-    numeroOrden: 1,
+    idPedido: "1",
     nombreCliente: "Ariel Colque Herrera",
     fechaSolicitud: "12/12/2020",
     fechaPago: "12/12/2020",
+    solicitudPelicula: [
+      {
+        idPelicula: "1",
+        nombrePelicula: "Jojo Rabbit",
+        cantidadSolicitada: 6,
+      },
+      {
+        idPelicula: "2",
+        nombrePelicula: "Mujercitas",
+        cantidadSolicitada: 5,
+      },
+    ],
+    reporteProblemas: "",
+    estado: "pagado",
   },
   {
-    numeroOrden: 2,
-    nombreCliente: "Solange Paredes Maximof",
+    idPedido: "2",
+    nombreCliente: "Nicole Espinoza Ulloa",
     fechaSolicitud: "12/12/2020",
     fechaPago: "12/12/2020",
+    solicitudPelicula: [
+      {
+        idPelicula: "3",
+        nombrePelicula: "Batman",
+        cantidadSolicitada: 1,
+      },
+      {
+        idPelicula: "4",
+        nombrePelicula: "Joker",
+        cantidadSolicitada: 1,
+      },
+    ],
+    reporteProblemas: "",
+    estado: "pagado",
   },
 ];
 
@@ -91,8 +139,7 @@ const ELEMENT_DATA_DESPACHADO: PedidoDespachado[] = [
   styleUrls: ["./gestion-pedidos.component.scss"],
 })
 export class GestionPedidosComponent implements OnInit {
-  // displayedColumns: string[] = ["id", "nombre", "correo", "telefono", "estado"];
-  // dataSource = new MatTableDataSource<UsuarioModel>();
+  reporte: string;
 
   displayedColumns: string[] = [
     "numOrd",
@@ -130,9 +177,13 @@ export class GestionPedidosComponent implements OnInit {
 
   ngOnInit() {}
 
-  detallePedidoPagado() {
+  detallePedido(pedido) {
     const dialogRef = this.dialog.open(DetallesPedidoComponent, {
       width: "600px",
+      data: {
+        pedidoSolicitado: pedido,
+      },
     });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }

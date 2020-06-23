@@ -66,12 +66,6 @@ form {
     .mat-form-field-label {
       color: white !important;
     }
-    .mat-form-field-underline {
-      //@warn: slategray !important;
-    }
-    .mat-form-field-ripple {
-      //background-color: slategray !important;
-    }
     .mat-form-field-required-marker {
       color: white !important;
     }
@@ -80,9 +74,6 @@ form {
   .mat-form-field.mat-focused {
     .mat-form-field-label {
       color: white !important;
-    }
-    .mat-form-field-ripple {
-      //background-color: white !important;
     }
     .mat-form-field-required-marker {
       color: white !important;

@@ -1,11 +1,9 @@
-<h1 mat-dialog-title>
-  Detalles de Pedido | Orden Nro : {{ solicitudPedido.idPedido }}
-</h1>
+<h1 mat-dialog-title>Detalles de Pedido | Orden Nro : {{ solicitudPedidoObjeto.idPedido }}</h1>
 <div mat-dialog-content class="dialog">
   <div
     class=""
     *ngFor="
-      let listaPeliculasSolicitadas of solicitudPedido.solicitudPelicula;
+      let listaPeliculasSolicitadas of solicitudPedidoObjeto.solicitudPelicula;
       let i = index
     "
   >
@@ -28,7 +26,7 @@
             <div
               class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
             >
-              {{ solicitudPedido.solicitudPelicula[i].nombrePelicula }}
+              {{ solicitudPedidoObjeto.solicitudPelicula[i].nombrePelicula }}
             </div>
           </div>
           <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
@@ -40,7 +38,7 @@
             <div
               class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
             >
-              {{ solicitudPedido.solicitudPelicula[i].cantidadSolicitada }}
+              {{ solicitudPedidoObjeto.solicitudPelicula[i].cantidadSolicitada }}
             </div>
           </div>
           <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">

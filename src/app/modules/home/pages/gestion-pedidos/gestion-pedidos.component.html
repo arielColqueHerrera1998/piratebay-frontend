@@ -20,7 +20,7 @@
           <th mat-header-cell *matHeaderCellDef class="table__title">
             Numero Orden
           </th>
-          <td mat-cell *matCellDef="let element">{{ element.numeroOrden }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.idPedido }}</td>
         </ng-container>
 
         <!--nombre Cliente -->
@@ -58,7 +58,7 @@
               mat-raised-button
               type="submit"
               class="form__button-container--button"
-              (click)="detallePedidoPagado()"
+              (click)="detallePedido(element)"
             >
               Detalle
             </button>
@@ -115,7 +115,7 @@
               mat-raised-button
               type="submit"
               class="form__button-container--button"
-              (click)="detallePedidoPagado()"
+              (click)="detallePedido(element.numeroOrden, element.estado)"
             >
               Detalle
             </button>
@@ -175,7 +175,7 @@
               mat-raised-button
               type="submit"
               class="form__button-container--button"
-              (click)="detallePedidoPagado()"
+              (click)="detallePedido(element.numeroOrden, element.estado)"
             >
               Detalle
             </button>
@@ -234,7 +234,7 @@
               mat-raised-button
               type="submit"
               class="form__button-container--button"
-              (click)="detallePedidoPagado()"
+              (click)="detallePedido(element.numeroOrden, element.estado)"
             >
               Detalle
             </button>
