@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { SolicitudPelicula } from "../../../../models/SolicitudPelicula";
-import { SolicitudPedido } from "../../../../models/SolicitudPedido";
+//import { SolicitudPedido } from "../../../../models/SolicitudPedido";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Inject } from "@angular/core";
 interface cantidadPelicula {
@@ -15,7 +15,7 @@ interface cantidadPelicula {
 })
 export class DetallesPedidoComponent implements OnInit {
   reporte: string;
-  solicitudPedidoObjeto: SolicitudPedido;
+  //solicitudPedidoObjeto: SolicitudPedido;
 
   cantidadDisponible: cantidadPelicula[] = [
     { value: "1", viewValue: "1" },
@@ -26,7 +26,6 @@ export class DetallesPedidoComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
-    //console.log("data :" + this.data);
-    this.solicitudPedidoObjeto = this.data.pedidoSolicitado;
+    //this.solicitudPedidoObjeto = this.data.pedidoSolicitado;
   }
 }

@@ -1,6 +1,6 @@
 import { SolicitudPelicula } from "./SolicitudPelicula";
 
-export class SolicitudPedido {
+export class SolicitudPedidoModelo {
   idPedido: string;
   solicitudPelicula: SolicitudPelicula[];
   reporteProblemas: string;

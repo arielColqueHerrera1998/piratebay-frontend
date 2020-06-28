@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UsuarioModel } from "./../../models/usuario";
+import { PedidoTablaModel } from "./../../models/PedidoTabla";
 @Injectable({
   providedIn: "root",
 })
@@ -47,5 +48,19 @@ export class RestapiService {
     localStorage.removeItem("refresh");
   }
 
-  
+  public getTDataTable(estado:number) {
+    var data={
+      "estado":estado
+    }
+    var tokenUser = localStorage.getItem("token");
+    const reqHeader = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "bearer " + tokenUser,
+      
+    });
+    return this.http.post<PedidoTablaModel[]>("http://localhost:8008/api/v1/ordersTable",data,{
+      headers: reqHeader,
+    });
+  }
+
 }

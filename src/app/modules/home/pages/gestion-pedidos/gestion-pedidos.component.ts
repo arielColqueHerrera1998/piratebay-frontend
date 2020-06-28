@@ -1,14 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
-import { UsuarioModel } from "./../../../../models/usuario";
-import { SolicitudPelicula } from "../../../../models/SolicitudPelicula";
-import { SolicitudPedido } from "../../../../models/SolicitudPedido";
+import { SolicitudPedidoModelo } from "../../../../models/SolicitudPedido";
+import { PedidoTablaModel } from "../../../../models/PedidoTabla";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
 import { DetallesPedidoComponent } from "./../../dialog/detalles-pedido/detalles-pedido.component";
+import { RestapiService } from "../../restapi.service";
+import { element } from 'protractor';
 export interface PedidoPagado {
   numeroOrden: number;
   nombreCliente: string;
@@ -36,78 +37,59 @@ export interface PedidoDespachado {
 
 // const ELEMENT_DATA: SolicitudPedido[] = [
 //   {
-//     numeroOrden: 1,
+//     idPedido: "1",
 //     nombreCliente: "Ariel Colque Herrera",
-//     fechaSolicitud: "12/12/2020",
-//     fechaPago: "12/12/2020",
+//     fechaSolicitud: "13/12/2020",
+//     fechaPago: "13/12/2020",
+//     solicitudPelicula: [
+//       {
+//         idPelicula: "1",
+//         nombrePelicula: "Jojo Rabbit",
+//         cantidadSolicitada: 6,
+//       },
+//       {
+//         idPelicula: "2",
+//         nombrePelicula: "Mujercitas",
+//         cantidadSolicitada: 5,
+//       },
+//     ],
+//     reporteProblemas: "",
 //     estado: "pagado",
 //   },
 //   {
-//     numeroOrden: 2,
-//     nombreCliente: "Solange Paredes Maximof",
+//     idPedido: "2",
+//     nombreCliente: "Nicole Espinoza Ulloa",
 //     fechaSolicitud: "12/12/2020",
 //     fechaPago: "12/12/2020",
+//     solicitudPelicula: [
+//       {
+//         idPelicula: "3",
+//         nombrePelicula: "Batman",
+//         cantidadSolicitada: 1,
+//       },
+//     ],
+//     reporteProblemas: "",
+//     estado: "pagado",
+//   },
+//   {
+//     idPedido: "3",
+//     nombreCliente: "Nicole Espinoza Ulloa",
+//     fechaSolicitud: "12/12/2020",
+//     fechaPago: "12/12/2020",
+//     solicitudPelicula: [
+//       {
+//         idPelicula: "5",
+//         nombrePelicula: "Robin",
+//         cantidadSolicitada: 1,
+//       },
+//     ],
+//     reporteProblemas: "",
 //     estado: "pagado",
 //   },
 // ];
 
-const ELEMENT_DATA: SolicitudPedido[] = [
-  {
-    idPedido: "1",
-    nombreCliente: "Ariel Colque Herrera",
-    fechaSolicitud: "12/12/2020",
-    fechaPago: "12/12/2020",
-    solicitudPelicula: [
-      {
-        idPelicula: "1",
-        nombrePelicula: "Jojo Rabbit",
-        cantidadSolicitada: 6,
-      },
-      {
-        idPelicula: "2",
-        nombrePelicula: "Mujercitas",
-        cantidadSolicitada: 5,
-      },
-    ],
-    reporteProblemas: "",
-    estado: "pagado",
-  },
-  {
-    idPedido: "2",
-    nombreCliente: "Nicole Espinoza Ulloa",
-    fechaSolicitud: "12/12/2020",
-    fechaPago: "12/12/2020",
-    solicitudPelicula: [
-      {
-        idPelicula: "3",
-        nombrePelicula: "Batman",
-        cantidadSolicitada: 1,
-      },
-      {
-        idPelicula: "4",
-        nombrePelicula: "Joker",
-        cantidadSolicitada: 1,
-      },
-    ],
-    reporteProblemas: "",
-    estado: "pagado",
-  },
-  {
-    idPedido: "3",
-    nombreCliente: "Nicole Espinoza Ulloa",
-    fechaSolicitud: "12/12/2020",
-    fechaPago: "12/12/2020",
-    solicitudPelicula: [
-      {
-        idPelicula: "5",
-        nombrePelicula: "Robin",
-        cantidadSolicitada: 1,
-      },
-    ],
-    reporteProblemas: "",
-    estado: "pagado",
-  },
-];
+
+
 
 const ELEMENT_DATA_PREPARANDO: PedidoPreparando[] = [
   {
@@ -155,6 +137,7 @@ const ELEMENT_DATA_DESPACHADO: PedidoDespachado[] = [
 })
 export class GestionPedidosComponent implements OnInit {
   reporte: string;
+  pedidoTabla: PedidoTablaModel[];
 
   displayedColumns: string[] = [
     "numOrd",
@@ -183,14 +166,21 @@ export class GestionPedidosComponent implements OnInit {
     "detPed",
   ];
 
-  dataSourceTablaPendientes = ELEMENT_DATA;
-  dataSourceTablaPreparando = ELEMENT_DATA_PREPARANDO;
-  dataSourceTablaPreparado = ELEMENT_DATA_PREPARADO;
-  dataSourceTablaDespachado = ELEMENT_DATA_DESPACHADO;
 
-  constructor(private dialog: MatDialog) {}
+  dataSourceTablaPendientes = new MatTableDataSource<PedidoTablaModel>();
+  dataSourceTablaPreparando = new MatTableDataSource<PedidoTablaModel>();
+  dataSourceTablaPreparado = new MatTableDataSource<PedidoTablaModel>();
+  dataSourceTablaDespachado = new MatTableDataSource<PedidoTablaModel>();
 
-  ngOnInit() {}
+
+  constructor(private dialog: MatDialog, private service: RestapiService) {}
+
+  ngOnInit() {
+    this.getTablePedidos(1);
+    this.getTablePedidosPreparando(2);
+    this.getTablePedidosPreparado(3);
+    this.getTablePedidosDespachado(4);
+  }
 
   detallePedido(pedido) {
     const dialogRef = this.dialog.open(DetallesPedidoComponent, {
@@ -200,5 +190,47 @@ export class GestionPedidosComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  getTablePedidos(numero) {
+    console.log("refrescando tabla pedidos");
+    this.service.getTDataTable(numero).subscribe(
+      (data: PedidoTablaModel[]) => {
+        this.dataSourceTablaPendientes.data = data;
+      },
+      (error) => {
+        console.log("error con la tabla");
+      }
+    );
+  }
+  getTablePedidosPreparando(numero) {
+    this.service.getTDataTable(numero).subscribe(
+      (data: PedidoTablaModel[]) => {
+        this.dataSourceTablaPreparando.data = data;
+      },
+      (error) => {
+        console.log("error con la tabla");
+      }
+    );
+  }
+  getTablePedidosPreparado(numero) {
+    this.service.getTDataTable(numero).subscribe(
+      (data: PedidoTablaModel[]) => {
+        this.dataSourceTablaPreparado.data = data;
+      },
+      (error) => {
+        console.log("error con la tabla");
+      }
+    );
+  }
+  getTablePedidosDespachado(numero) {
+    this.service.getTDataTable(numero).subscribe(
+      (data: PedidoTablaModel[]) => {
+        this.dataSourceTablaDespachado.data = data;
+      },
+      (error) => {
+        console.log("error con la tabla");
+      }
+    );
   }
 }
