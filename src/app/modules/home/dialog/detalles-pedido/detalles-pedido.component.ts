@@ -15,25 +15,27 @@ interface cantidadPelicula {
   styleUrls: ["./detalles-pedido.component.scss"],
 })
 export class DetallesPedidoComponent implements OnInit {
+  cantidadProducto:number;
+  tamanioObjecto:number;
   reporte: string;
-  //solicitudPedidoObjeto: SolicitudPedido;
+  comboData: Combobox[];
+  aux:cantidadPelicula;
 
-  cantidadDisponible: cantidadPelicula[] = [
-    { value: "1", viewValue: "1" },
-    { value: "2", viewValue: "2" },
-    { value: "3", viewValue: "3" },
-  ];
+  cantidadDisponible: number[]=[];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private service: RestapiService) {}
-  dataCombo:Array<Combobox>;
   ngOnInit() {
-    this.llenarCombo(2);
-    //this.solicitudPedidoObjeto = this.data.pedidoSolicitado;
+    this.llenarCombo(5);
   }
   llenarCombo(cantidad:number) {
     this.service.getDataCombobox(cantidad).subscribe(
       (data) => {
-        console.log(data);
+        //console.log("data : "+data);
+        this.cantidadProducto=data;
+        for(let i = 1; i <= this.cantidadProducto; i++){
+          this.cantidadDisponible.push(i);
+        }
+        //console.log("cantidad Producto :"+this.cantidadProducto);
       },
       (error) => {
         console.log("error con la tabla");

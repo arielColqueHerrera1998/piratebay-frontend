@@ -182,15 +182,7 @@ export class GestionPedidosComponent implements OnInit {
     this.getTablePedidosDespachado(4);
   }
 
-  detallePedido(pedido) {
-    const dialogRef = this.dialog.open(DetallesPedidoComponent, {
-      width: "600px",
-      data: {
-        pedidoSolicitado: pedido,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {});
-  }
+  
 
   getTablePedidos(numero) {
     console.log("refrescando tabla pedidos");
@@ -232,5 +224,18 @@ export class GestionPedidosComponent implements OnInit {
         console.log("error con la tabla");
       }
     );
+  }
+
+  detallePedido(pedido,estado) {
+    console.log("detalle de pedido");
+    console.log("id pedido :"+pedido);
+    console.log("estado :"+estado);
+    const dialogRef = this.dialog.open(DetallesPedidoComponent, {
+      width: "600px",
+      // data: {
+      //   pedidoSolicitado: pedido,
+      // },
+    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }

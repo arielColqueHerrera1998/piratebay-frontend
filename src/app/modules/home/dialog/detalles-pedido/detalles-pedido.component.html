@@ -52,10 +52,10 @@
                 <mat-label>Cantidad a Entregar</mat-label>
                 <mat-select>
                   <mat-option
-                    *ngFor="let disponible of cantidadDisponible"
-                    [value]="disponible.value"
+                    *ngFor="let disponible of cantidadDisponible;let i = index"
+                    [value]="i"
                   >
-                    {{ disponible.viewValue }}
+                    {{ disponible }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

@@ -5,4 +5,5 @@ export class PedidoTablaModel{
     fechaPago:string;
     fechaPreparacion:string;
     fechaPreparado:string;
+    status:number;
 }
