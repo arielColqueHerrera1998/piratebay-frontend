@@ -1,12 +1,12 @@
-<h1 mat-dialog-title>Detalles de Pedido | Orden Nro : {{ solicitudPedidoObjeto.idPedido }}</h1>
+<h1 mat-dialog-title>Detalles de Pedido | Orden Nro : 1</h1>
 <div mat-dialog-content class="dialog">
-  <div
+  <!-- <div
     class=""
     *ngFor="
       let listaPeliculasSolicitadas of solicitudPedidoObjeto.solicitudPelicula;
       let i = index
     "
-  >
+  > -->
     <div class="dialog-pedido-detalle">
       <div class="dialog-pedido-detalle__cuerpo">
         <div class="dialog-pedido-detalle__cuerpo-icono">
@@ -26,7 +26,7 @@
             <div
               class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
             >
-              {{ solicitudPedidoObjeto.solicitudPelicula[i].nombrePelicula }}
+              <!-- {{ solicitudPedidoObjeto.solicitudPelicula[i].nombrePelicula }} -->
             </div>
           </div>
           <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
@@ -38,7 +38,7 @@
             <div
               class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
             >
-              {{ solicitudPedidoObjeto.solicitudPelicula[i].cantidadSolicitada }}
+              <!-- {{ solicitudPedidoObjeto.solicitudPelicula[i].cantidadSolicitada }} -->
             </div>
           </div>
           <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
@@ -71,7 +71,7 @@
       </div>
     </div>
   </div>
-</div>
+<!-- </div> -->
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close class="dialog__button--negative">
     Cerrar
