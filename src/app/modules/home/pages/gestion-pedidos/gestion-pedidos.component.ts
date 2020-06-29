@@ -9,7 +9,7 @@ import {
 } from "@angular/material/dialog";
 import { DetallesPedidoComponent } from "./../../dialog/detalles-pedido/detalles-pedido.component";
 import { RestapiService } from "../../restapi.service";
-import { element } from 'protractor';
+import { element } from "protractor";
 export interface PedidoPagado {
   numeroOrden: number;
   nombreCliente: string;
@@ -34,7 +34,6 @@ export interface PedidoDespachado {
   nombreCliente: string;
   fechaPreparado: string;
 }
-
 
 @Component({
   selector: "app-gestion-pedidos",
@@ -72,12 +71,10 @@ export class GestionPedidosComponent implements OnInit {
     "detPed",
   ];
 
-
   dataSourceTablaPendientes = new MatTableDataSource<PedidoTablaModel>();
   dataSourceTablaPreparando = new MatTableDataSource<PedidoTablaModel>();
   dataSourceTablaPreparado = new MatTableDataSource<PedidoTablaModel>();
   dataSourceTablaDespachado = new MatTableDataSource<PedidoTablaModel>();
-
 
   constructor(private dialog: MatDialog, private service: RestapiService) {}
 
@@ -87,8 +84,6 @@ export class GestionPedidosComponent implements OnInit {
     this.getTablePedidosPreparado(3);
     this.getTablePedidosDespachado(4);
   }
-
-  
 
   getTablePedidos(numero) {
     console.log("refrescando tabla pedidos");
@@ -132,13 +127,16 @@ export class GestionPedidosComponent implements OnInit {
     );
   }
 
-  detallePedido(pedido,estado) {
-    //console.log("detalle de pedido");
-    //console.log("id pedido :"+pedido);
-    //console.log("estado :"+estado);
+  detallePedido(pedido:number, estado:number) {
+    // console.log("detalle de pedido");
+    // console.log("id pedido :"+pedido);
+    // console.log("estado :"+estado);
     const dialogRef = this.dialog.open(DetallesPedidoComponent, {
       width: "600px",
-      data: pedido
+      data: {
+        orderIdPedido : pedido,
+        estadoPedido :estado,
+      },
     });
     dialogRef.afterClosed().subscribe((result) => {});
   }

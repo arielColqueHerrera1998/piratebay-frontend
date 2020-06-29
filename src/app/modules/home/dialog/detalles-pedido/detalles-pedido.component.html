@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Detalles de Pedido | Orden Nro : {{orderId}}</h1>
+<h1 mat-dialog-title>Detalles de Pedido | Orden Nro : {{orderIdPedido}}</h1>
 <div mat-dialog-content class="dialog">
   <div
     class=""
@@ -60,12 +60,12 @@
             <div
               class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
             >
-              <mat-form-field>
+              <mat-form-field >
                 <mat-label>Cantidad a Entregar</mat-label>
-                <mat-select (click)="llenarCombo(detallePedido[i].productoId)" >
+                <mat-select (click)="llenarCombo(detallePedido[i].productoId)" [(ngModel)]="selectedValue[i]" >
                   <mat-option
                     *ngFor="let disponible of cantidadDisponible;let i = index"
-                    [value]="i"
+                    [value]="i" 
                   >
                     {{ disponible }}
                   </mat-option>
@@ -75,12 +75,12 @@
           </div>
         </div>
       </div>
-      <div class="dialog-pedido-detalle__problema">
+      <!-- <div class="dialog-pedido-detalle__problema">
         <mat-form-field class="example-full-width">
           <mat-label>Reportar Problema</mat-label>
           <textarea matInput placeholder="Problemas?"></textarea>
         </mat-form-field>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -88,7 +88,7 @@
   <button mat-button mat-dialog-close class="dialog__button--negative">
     Cerrar
   </button>
-  <button mat-button cdkFocusInitial class="dialog__button--positive">
-    A preparacion
+  <button mat-button cdkFocusInitial class="dialog__button--positive" (click)="aPreparacion()">
+    {{botonNext}}
   </button>
 </mat-dialog-actions>
