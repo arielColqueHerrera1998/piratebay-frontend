@@ -3,6 +3,7 @@ import { DetallePedido } from "../../../../models/DetallePedido";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Inject } from "@angular/core";
 import { RestapiService } from "../../restapi.service";
+import { Console } from "console";
 
 @Component({
   selector: "app-detalles-pedido",
@@ -18,14 +19,15 @@ export class DetallesPedidoComponent implements OnInit {
   estadoPedido: number;
   selectedValue: string[] = [];
   botonNext: string;
+  respCambioEstado : number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private service: RestapiService
   ) {}
   ngOnInit() {
-    this.orderIdPedido=this.data.orderIdPedido;
-    this.estadoPedido=this.data.estadoPedido;
+    this.orderIdPedido = this.data.orderIdPedido;
+    this.estadoPedido = this.data.estadoPedido;
     // console.log("order  : " + this.orderIdPedido);
     // console.log("estado : " + this.estadoPedido);
     this.obtenerDetalles(this.orderIdPedido);
@@ -44,10 +46,14 @@ export class DetallesPedidoComponent implements OnInit {
       }
     );
   }
+
+
+
   obtenerDetalles(orderId: number) {
     switch (this.estadoPedido) {
       case 1:
         this.botonNext = "A preparacion";
+        
         break;
       case 2:
         this.botonNext = "A preparados";
@@ -72,9 +78,46 @@ export class DetallesPedidoComponent implements OnInit {
       }
     );
   }
-  aPreparacion() {
+  next() {
     for (var i = 0; i < this.selectedValue.length; i++) {
       console.log(this.selectedValue[i]);
     }
+    switch (this.estadoPedido) {
+      case 1:
+        //console.log("pedido :" + this.orderIdPedido);
+        //console.log("a preparacion");
+        this.cambiarEstado(2,this.orderIdPedido);
+        break;
+      case 2:
+        // console.log("pedido :" + this.orderIdPedido);
+        // console.log("a preparados");
+        this.cambiarEstado(3,this.orderIdPedido);
+        break;
+      case 3:
+        // console.log("pedido :" + this.orderIdPedido);
+        // console.log("a despachados");
+        this.cambiarEstado(4,this.orderIdPedido);
+        break;
+      case 4:
+        // console.log("pedido :" + this.orderIdPedido);
+        // console.log("listo");
+        this.cambiarEstado(4,this.orderIdPedido);
+        break;
+      default:
+        console.log("pedido :" + this.orderIdPedido);
+        console.log("error en data");
+        break;
+    }
+  }
+
+  cambiarEstado(estado :number , pedido :number) {
+    this.service.cambiarEstadoPedido(estado,pedido).subscribe(
+      (data) => {
+        console.log("data : "+data);
+      },
+      (error) => {
+        console.log("error al cambiar de estado");
+      }
+    );
   }
 }

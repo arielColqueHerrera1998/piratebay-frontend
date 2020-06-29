@@ -91,4 +91,19 @@ export class RestapiService {
     });
   }
 
+  public cambiarEstadoPedido(estado:number,orderId:number) {
+    var data={
+      "order_estado":estado,
+      "order_id":orderId
+    }
+    var tokenUser = localStorage.getItem("token");
+    const reqHeader = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "bearer " + tokenUser,
+    });
+    return this.http.post<number>("http://localhost:8008/api/v1/cambiarEstado",data,{
+      headers: reqHeader,
+    });
+  }
+
 }
