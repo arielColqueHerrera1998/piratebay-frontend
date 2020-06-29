@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
-import { SolicitudPedidoModelo } from "../../../../models/SolicitudPedido";
 import { PedidoTablaModel } from "../../../../models/PedidoTabla";
+
 import {
   MatDialog,
   MatDialogRef,
@@ -35,100 +35,6 @@ export interface PedidoDespachado {
   fechaPreparado: string;
 }
 
-// const ELEMENT_DATA: SolicitudPedido[] = [
-//   {
-//     idPedido: "1",
-//     nombreCliente: "Ariel Colque Herrera",
-//     fechaSolicitud: "13/12/2020",
-//     fechaPago: "13/12/2020",
-//     solicitudPelicula: [
-//       {
-//         idPelicula: "1",
-//         nombrePelicula: "Jojo Rabbit",
-//         cantidadSolicitada: 6,
-//       },
-//       {
-//         idPelicula: "2",
-//         nombrePelicula: "Mujercitas",
-//         cantidadSolicitada: 5,
-//       },
-//     ],
-//     reporteProblemas: "",
-//     estado: "pagado",
-//   },
-//   {
-//     idPedido: "2",
-//     nombreCliente: "Nicole Espinoza Ulloa",
-//     fechaSolicitud: "12/12/2020",
-//     fechaPago: "12/12/2020",
-//     solicitudPelicula: [
-//       {
-//         idPelicula: "3",
-//         nombrePelicula: "Batman",
-//         cantidadSolicitada: 1,
-//       },
-//     ],
-//     reporteProblemas: "",
-//     estado: "pagado",
-//   },
-//   {
-//     idPedido: "3",
-//     nombreCliente: "Nicole Espinoza Ulloa",
-//     fechaSolicitud: "12/12/2020",
-//     fechaPago: "12/12/2020",
-//     solicitudPelicula: [
-//       {
-//         idPelicula: "5",
-//         nombrePelicula: "Robin",
-//         cantidadSolicitada: 1,
-//       },
-//     ],
-//     reporteProblemas: "",
-//     estado: "pagado",
-//   },
-// ];
-
-
-
-
-const ELEMENT_DATA_PREPARANDO: PedidoPreparando[] = [
-  {
-    numeroOrden: 1,
-    nombreCliente: "Ariel Colque Herrera",
-    fechaRecepcion: "12/12/2020",
-  },
-  {
-    numeroOrden: 2,
-    nombreCliente: "Solange Paredes Maximof",
-    fechaRecepcion: "12/12/2020",
-  },
-];
-
-const ELEMENT_DATA_PREPARADO: PedidoPreparados[] = [
-  {
-    numeroOrden: 1,
-    nombreCliente: "Ariel Colque Herrera",
-    fechaPreparacion: "12/12/2020",
-  },
-  {
-    numeroOrden: 2,
-    nombreCliente: "Solange Paredes Maximof",
-    fechaPreparacion: "12/12/2020",
-  },
-];
-
-const ELEMENT_DATA_DESPACHADO: PedidoDespachado[] = [
-  {
-    numeroOrden: 1,
-    nombreCliente: "Ariel Colque Herrera",
-    fechaPreparado: "12/12/2020",
-  },
-  {
-    numeroOrden: 2,
-    nombreCliente: "Solange Paredes Maximof",
-    fechaPreparado: "12/12/2020",
-  },
-];
 
 @Component({
   selector: "app-gestion-pedidos",
@@ -227,14 +133,12 @@ export class GestionPedidosComponent implements OnInit {
   }
 
   detallePedido(pedido,estado) {
-    console.log("detalle de pedido");
-    console.log("id pedido :"+pedido);
-    console.log("estado :"+estado);
+    //console.log("detalle de pedido");
+    //console.log("id pedido :"+pedido);
+    //console.log("estado :"+estado);
     const dialogRef = this.dialog.open(DetallesPedidoComponent, {
       width: "600px",
-      // data: {
-      //   pedidoSolicitado: pedido,
-      // },
+      data: pedido
     });
     dialogRef.afterClosed().subscribe((result) => {});
   }

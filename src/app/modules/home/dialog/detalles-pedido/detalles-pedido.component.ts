@@ -1,13 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { SolicitudPelicula } from "../../../../models/SolicitudPelicula";
 import { Combobox } from "../../../../models/Combobox";
+import { DetallePedido } from "../../../../models/DetallePedido";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Inject } from "@angular/core";
 import { RestapiService } from '../../restapi.service';
-interface cantidadPelicula {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: "app-detalles-pedido",
@@ -16,26 +12,37 @@ interface cantidadPelicula {
 })
 export class DetallesPedidoComponent implements OnInit {
   cantidadProducto:number;
-  tamanioObjecto:number;
+  detallePedido:DetallePedido[];
   reporte: string;
-  comboData: Combobox[];
-  aux:cantidadPelicula;
-
   cantidadDisponible: number[]=[];
+  orderId : number;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private service: RestapiService) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: number, private service: RestapiService) {}
   ngOnInit() {
-    this.llenarCombo(5);
+    this.orderId=this.data;
+    this.obtenerDetalles(this.orderId);
+    this.cantidadDisponible=[];
+    // this.llenarCombo(5);
   }
   llenarCombo(cantidad:number) {
+    this.cantidadDisponible=[];
     this.service.getDataCombobox(cantidad).subscribe(
       (data) => {
-        //console.log("data : "+data);
         this.cantidadProducto=data;
         for(let i = 1; i <= this.cantidadProducto; i++){
           this.cantidadDisponible.push(i);
         }
-        //console.log("cantidad Producto :"+this.cantidadProducto);
+      },
+      (error) => {
+        console.log("error con la tabla");
+      }
+    );
+  }
+  obtenerDetalles(orderId:number){
+    this.service.getDetallesPedido(orderId).subscribe(
+      (data) => {
+        //console.log(data);
+        this.detallePedido=data;
       },
       (error) => {
         console.log("error con la tabla");

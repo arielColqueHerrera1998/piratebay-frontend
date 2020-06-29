@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UsuarioModel } from "./../../models/usuario";
 import { PedidoTablaModel } from "./../../models/PedidoTabla";
+import { DetallePedido } from "./../../models/DetallePedido";
 import { Combobox } from 'src/app/models/Combobox';
 @Injectable({
   providedIn: "root",
@@ -73,6 +74,19 @@ export class RestapiService {
       Authorization: "bearer " + tokenUser,
     });
     return this.http.post<number>("http://localhost:8008/api/v1/cantidadProducto",data,{
+      headers: reqHeader,
+    });
+  }
+
+
+  public getDetallesPedido(orderId:number) {
+    var data=orderId;
+    var tokenUser = localStorage.getItem("token");
+    const reqHeader = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "bearer " + tokenUser,
+    });
+    return this.http.post<DetallePedido[]>("http://localhost:8008/api/v1/orders",data,{
       headers: reqHeader,
     });
   }

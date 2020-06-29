@@ -1,12 +1,12 @@
-<h1 mat-dialog-title>Detalles de Pedido | Orden Nro : 1</h1>
+<h1 mat-dialog-title>Detalles de Pedido | Orden Nro : {{orderId}}</h1>
 <div mat-dialog-content class="dialog">
-  <!-- <div
+  <div
     class=""
     *ngFor="
-      let listaPeliculasSolicitadas of solicitudPedidoObjeto.solicitudPelicula;
+      let detalle of detallePedido;
       let i = index
     "
-  > -->
+  >
     <div class="dialog-pedido-detalle">
       <div class="dialog-pedido-detalle__cuerpo">
         <div class="dialog-pedido-detalle__cuerpo-icono">
@@ -26,7 +26,19 @@
             <div
               class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
             >
-              <!-- {{ solicitudPedidoObjeto.solicitudPelicula[i].nombrePelicula }} -->
+              {{ detallePedido[i].nombreProducto }}
+            </div>
+          </div>
+          <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
+            <div
+              class="dialog-pedido-detalle__cuerpo-contenido-informacion--subtitulo"
+            >
+              Minutos de duracion :
+            </div>
+            <div
+              class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
+            >
+              {{ detallePedido[i].minutos }} min
             </div>
           </div>
           <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
@@ -38,7 +50,7 @@
             <div
               class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
             >
-              <!-- {{ solicitudPedidoObjeto.solicitudPelicula[i].cantidadSolicitada }} -->
+              {{ detallePedido[i].cantidadPedida }}
             </div>
           </div>
           <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
@@ -50,7 +62,7 @@
             >
               <mat-form-field>
                 <mat-label>Cantidad a Entregar</mat-label>
-                <mat-select>
+                <mat-select (click)="llenarCombo(detallePedido[i].productoId)" >
                   <mat-option
                     *ngFor="let disponible of cantidadDisponible;let i = index"
                     [value]="i"
@@ -71,7 +83,7 @@
       </div>
     </div>
   </div>
-<!-- </div> -->
+</div>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close class="dialog__button--negative">
     Cerrar
