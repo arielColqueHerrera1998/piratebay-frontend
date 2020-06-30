@@ -123,4 +123,35 @@ export class RestapiService {
     });
   }
 
+
+
+  public getDataCombo(orderId:number) {
+    var data=orderId;
+    var tokenUser = localStorage.getItem("token");
+    const reqHeader = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "bearer " + tokenUser,
+    });
+    return this.http.post<number[]>("http://localhost:8008/api/v1/comboData",data,{
+      headers: reqHeader,
+    });
+  }
+
+
+  public updateDataCombo(combo:number,orderId:number,productId:number) {
+    var data={
+      "combonumber": combo,
+      "orderId": orderId,
+      "productId": productId
+    }
+    var tokenUser = localStorage.getItem("token");
+    const reqHeader = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "bearer " + tokenUser,
+    });
+    return this.http.post<number>("http://localhost:8008/api/v1/sendData",data,{
+      headers: reqHeader,
+    });
+  }
+
 }

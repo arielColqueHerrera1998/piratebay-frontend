@@ -4,8 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Inject } from "@angular/core";
 import { RestapiService } from "../../restapi.service";
 import { Console } from "console";
-import * as moment from 'moment';
-import { Timestamp } from 'rxjs';
+import * as moment from "moment";
+import { Timestamp } from "rxjs";
 
 @Component({
   selector: "app-detalles-pedido",
@@ -22,18 +22,25 @@ export class DetallesPedidoComponent implements OnInit {
   selectedValue: string[] = [];
   botonNext: string;
   respCambioEstado: number;
+  auxiliarCantidad: number[];
+  flag: Boolean = false;
+  comboData: number[];
+  comboDataProductId:number[]=[];
+
+  comboboxAux: number[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private service: RestapiService,private dialogRef:MatDialogRef<DetallesPedidoComponent>
+    private service: RestapiService,
+    private dialogRef: MatDialogRef<DetallesPedidoComponent>
   ) {}
   ngOnInit() {
     this.orderIdPedido = this.data.orderIdPedido;
     this.estadoPedido = this.data.estadoPedido;
-    // console.log("order  : " + this.orderIdPedido);
-    // console.log("estado : " + this.estadoPedido);
     this.obtenerDetalles(this.orderIdPedido);
+    this.llenarComboBackend(this.orderIdPedido);
   }
+
   llenarCombo(cantidad: number) {
     this.cantidadDisponible = [];
     this.service.getDataCombobox(cantidad).subscribe(
@@ -42,6 +49,18 @@ export class DetallesPedidoComponent implements OnInit {
         for (let i = 1; i <= this.cantidadProducto; i++) {
           this.cantidadDisponible.push(i);
         }
+      },
+      (error) => {
+        console.log("error con la tabla");
+      }
+    );
+  }
+
+  llenarComboBackend(cantidad: number) {
+    this.cantidadDisponible = [];
+    this.service.getDataCombo(cantidad).subscribe(
+      (data) => {
+        this.comboData = data;
       },
       (error) => {
         console.log("error con la tabla");
@@ -78,23 +97,48 @@ export class DetallesPedidoComponent implements OnInit {
     );
   }
   next() {
-    for (var i = 0; i < this.selectedValue.length; i++) {
-      console.log(this.selectedValue[i]);
-    }
     switch (this.estadoPedido) {
       case 1:
-        //console.log("pedido :" + this.orderIdPedido);
-        //console.log("a preparacion");
-        this.cambiarEstado(2, this.orderIdPedido);
         this.dialogRef.close();
+        for (var i = 0; i < this.selectedValue.length; i++) {
+          console.log("valor : " + this.selectedValue[i].toString());
+          if (
+            parseInt(this.selectedValue[i]) >
+            this.detallePedido[i].cantidadPedida
+          ) {
+            console.log(
+              this.selectedValue[i] + ">" + this.detallePedido[i].cantidadPedida
+            );
+            this.flag = true;
+          }
+        }
+        if (this.flag) {
+          console.log("error en los comboboxes");
+        } else {
+          this.cambiarEstado(2, this.orderIdPedido);
+          
+          for (let detail in this.detallePedido) {
+            var aux = this.detallePedido[detail].productoId;
+            this.comboDataProductId.push(aux)
+          }
+          for(var i = 0; i < this.selectedValue.length; i++){
+            console.log(parseInt(this.selectedValue[i])+"|"+this.orderIdPedido+"|"+this.comboDataProductId[i]);
+            this.updateComboboxData(
+              parseInt(this.selectedValue[i]),
+              this.orderIdPedido,
+              this.comboDataProductId[i]
+            )
+          }
+        }
+        this.flag = false;
         break;
       case 2:
         // console.log("pedido :" + this.orderIdPedido);
         // console.log("a preparados");
-        var mysqlTimestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+        var mysqlTimestamp = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
         this.cambiarEstado(3, this.orderIdPedido);
         //var auxDate= new Date(this.getFecharHora.toString());
-        this.cambiarconfecha(this.orderIdPedido ,this.estadoPedido );
+        this.cambiarconfecha(this.orderIdPedido, this.estadoPedido);
         console.log(mysqlTimestamp);
         this.dialogRef.close();
         break;
@@ -102,7 +146,7 @@ export class DetallesPedidoComponent implements OnInit {
         // console.log("pedido :" + this.orderIdPedido);
         // console.log("a despachados");
         this.cambiarEstado(4, this.orderIdPedido);
-        this.cambiarconfecha(this.orderIdPedido ,this.estadoPedido );
+        this.cambiarconfecha(this.orderIdPedido, this.estadoPedido);
         this.dialogRef.close();
         break;
       case 4:
@@ -130,8 +174,23 @@ export class DetallesPedidoComponent implements OnInit {
     );
   }
 
-  cambiarconfecha(pedido: number,orderestado :number) {
-    this.service.siguienteEstadoFecha(pedido,orderestado).subscribe(
+  cambiarconfecha(pedido: number, orderestado: number) {
+    this.service.siguienteEstadoFecha(pedido, orderestado).subscribe(
+      (data) => {
+        console.log("data : " + data);
+      },
+      (error) => {
+        console.log("error al cambiar de estado fecha");
+      }
+    );
+  }
+
+  updateComboboxData(
+    combonumber: number,
+    orderId: number,
+    orderProduct: number
+  ) {
+    this.service.updateDataCombo(combonumber, orderId, orderProduct).subscribe(
       (data) => {
         console.log("data : " + data);
       },

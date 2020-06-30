@@ -79,7 +79,6 @@ export class GestionPedidosComponent implements OnInit {
   constructor(private dialog: MatDialog, private service: RestapiService, private changeDetectorRefs: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.getTablePedidos(1);
     
     this.refresh();
   }

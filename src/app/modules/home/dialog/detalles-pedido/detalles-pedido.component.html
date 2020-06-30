@@ -1,12 +1,6 @@
-<h1 mat-dialog-title>Detalles de Pedido | Orden Nro : {{orderIdPedido}}</h1>
+<h1 mat-dialog-title>Detalles de Pedido | Orden Nro : {{ orderIdPedido }}</h1>
 <div mat-dialog-content class="dialog">
-  <div
-    class=""
-    *ngFor="
-      let detalle of detallePedido;
-      let i = index
-    "
-  >
+  <div class="" *ngFor="let detalle of detallePedido; let i = index">
     <div class="dialog-pedido-detalle">
       <div class="dialog-pedido-detalle__cuerpo">
         <div class="dialog-pedido-detalle__cuerpo-icono">
@@ -53,24 +47,48 @@
               {{ detallePedido[i].cantidadPedida }}
             </div>
           </div>
-          <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
-            <div
-              class="dialog-pedido-detalle__cuerpo-contenido-informacion--subtitulo"
-            ></div>
-            <div
-              class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
-            >
-              <mat-form-field >
-                <mat-label>Cantidad a Entregar</mat-label>
-                <mat-select (click)="llenarCombo(detallePedido[i].productoId)" [(ngModel)]="selectedValue[i]" >
-                  <mat-option
-                    *ngFor="let disponible of cantidadDisponible;let i = index"
-                    [value]="i" 
-                  >
-                    {{ disponible }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+          <div [ngSwitch]="estadoPedido">
+            <div *ngSwitchCase="1">
+              <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
+                <div
+                  class="dialog-pedido-detalle__cuerpo-contenido-informacion--subtitulo"
+                ></div>
+                <div
+                  class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
+                >
+                  <mat-form-field>
+                    <mat-label>Cantidad a Entregar</mat-label>
+                    <mat-select
+                      (click)="llenarCombo(detallePedido[i].productoId)"
+                      [(ngModel)]="selectedValue[i]"
+                    >
+                      <mat-option
+                        *ngFor="
+                          let disponible of cantidadDisponible;
+                          let i = index
+                        "
+                        [value]="disponible"
+                      >
+                        {{ disponible }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div *ngSwitchDefault>
+              <div class="dialog-pedido-detalle__cuerpo-contenido-informacion">
+                <div
+                  class="dialog-pedido-detalle__cuerpo-contenido-informacion--subtitulo"
+                >
+                  Cantidad Entregada :
+                </div>
+                <div
+                  class="dialog-pedido-detalle__cuerpo-contenido-informacion--texto"
+                >
+                  {{ comboData[i] }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -88,7 +106,12 @@
   <button mat-button mat-dialog-close class="dialog__button--negative">
     Cerrar
   </button>
-  <button mat-button cdkFocusInitial class="dialog__button--positive" (click)="next()">
-    {{botonNext}}
+  <button
+    mat-button
+    cdkFocusInitial
+    class="dialog__button--positive"
+    (click)="next()"
+  >
+    {{ botonNext }}
   </button>
 </mat-dialog-actions>
