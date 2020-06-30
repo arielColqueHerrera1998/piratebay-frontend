@@ -24,7 +24,7 @@ export class DetallesPedidoComponent implements OnInit {
   respCambioEstado: number;
   auxiliarCantidad: number[];
   flag: Boolean = false;
-  comboData: number[];
+  comboData: number[]=[];
   comboDataProductId:number[]=[];
 
   comboboxAux: number[];
@@ -41,6 +41,8 @@ export class DetallesPedidoComponent implements OnInit {
     this.llenarComboBackend(this.orderIdPedido);
   }
 
+  //llenar comobo para frontend con dato del backend
+
   llenarCombo(cantidad: number) {
     this.cantidadDisponible = [];
     this.service.getDataCombobox(cantidad).subscribe(
@@ -56,6 +58,8 @@ export class DetallesPedidoComponent implements OnInit {
     );
   }
 
+  //llenar combobox desde backend
+
   llenarComboBackend(cantidad: number) {
     this.cantidadDisponible = [];
     this.service.getDataCombo(cantidad).subscribe(
@@ -67,6 +71,8 @@ export class DetallesPedidoComponent implements OnInit {
       }
     );
   }
+
+  //obtener detalles de pedido en base a ID
 
   obtenerDetalles(orderId: number) {
     switch (this.estadoPedido) {
@@ -96,6 +102,7 @@ export class DetallesPedidoComponent implements OnInit {
       }
     );
   }
+  //boton siguiente para cada modal
   next() {
     switch (this.estadoPedido) {
       case 1:
@@ -122,7 +129,7 @@ export class DetallesPedidoComponent implements OnInit {
             this.comboDataProductId.push(aux)
           }
           for(var i = 0; i < this.selectedValue.length; i++){
-            console.log(parseInt(this.selectedValue[i])+"|"+this.orderIdPedido+"|"+this.comboDataProductId[i]);
+            //console.log(parseInt(this.selectedValue[i])+"|"+this.orderIdPedido+"|"+this.comboDataProductId[i]);
             this.updateComboboxData(
               parseInt(this.selectedValue[i]),
               this.orderIdPedido,
@@ -135,11 +142,11 @@ export class DetallesPedidoComponent implements OnInit {
       case 2:
         // console.log("pedido :" + this.orderIdPedido);
         // console.log("a preparados");
-        var mysqlTimestamp = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
+        //var mysqlTimestamp = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
         this.cambiarEstado(3, this.orderIdPedido);
         //var auxDate= new Date(this.getFecharHora.toString());
         this.cambiarconfecha(this.orderIdPedido, this.estadoPedido);
-        console.log(mysqlTimestamp);
+        //console.log(mysqlTimestamp);
         this.dialogRef.close();
         break;
       case 3:
@@ -163,10 +170,12 @@ export class DetallesPedidoComponent implements OnInit {
     }
   }
 
+  //cambia de estado un pedido 
+
   cambiarEstado(estado: number, pedido: number) {
     this.service.cambiarEstadoPedido(estado, pedido).subscribe(
       (data) => {
-        console.log("data : " + data);
+        //console.log("data : " + data);
       },
       (error) => {
         console.log("error al cambiar de estado");
@@ -174,16 +183,20 @@ export class DetallesPedidoComponent implements OnInit {
     );
   }
 
+  //cambio para estado con la fecha correspondiente
+
   cambiarconfecha(pedido: number, orderestado: number) {
     this.service.siguienteEstadoFecha(pedido, orderestado).subscribe(
       (data) => {
-        console.log("data : " + data);
+        //console.log("data : " + data);
       },
       (error) => {
         console.log("error al cambiar de estado fecha");
       }
     );
   }
+
+  //--actualizacion de combo box seleccionados por usuario
 
   updateComboboxData(
     combonumber: number,
@@ -192,25 +205,11 @@ export class DetallesPedidoComponent implements OnInit {
   ) {
     this.service.updateDataCombo(combonumber, orderId, orderProduct).subscribe(
       (data) => {
-        console.log("data : " + data);
+        //console.log("data : " + data);
       },
       (error) => {
         console.log("error al cambiar de estado fecha");
       }
     );
   }
-
-  // getFecharHora() {
-  //   var newDate = new Date().toLocaleString();
-  //   var date = newDate.split(" ");
-  //   var fecha = date[0];
-  //   var hora = date[1];
-  //   //console.log("time : " + newDate);
-  //   var auxFecha = fecha.split("/");
-  //   // var nuevaFecha = auxFecha[2] + "/" + auxFecha[1] + "/" + auxFecha[0];
-  //   //console.log("nueva fecha : " + nuevaFecha);
-  //   var nuevoTime = (auxFecha[2] + "-0" + auxFecha[1] + "-" + auxFecha[0] + "T" + hora+".000000");
-  //   //console.log("nuevo time : " + nuevoTime);
-  //   return nuevoTime;
-  // }
 }

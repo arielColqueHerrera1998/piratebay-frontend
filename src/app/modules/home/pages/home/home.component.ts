@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
     let resp = this.service.refresh(tokenUsuario);
     resp.subscribe(
       (data) => {
-        console.log(data);
+        //console.log(data);
         for (let key in data) {
           if (key == "refresh ") {
             this.nuevoTokenRefresh = data[key];

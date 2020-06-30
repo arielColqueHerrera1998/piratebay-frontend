@@ -1,6 +1,8 @@
 import { Component, OnInit,ChangeDetectorRef  } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
 import { PedidoTablaModel } from "../../../../models/PedidoTabla";
+import { Router, ActivatedRoute } from "@angular/router";
+import * as jwt_decode from "jwt-decode";
 
 import {
   MatDialog,
@@ -43,6 +45,9 @@ export interface PedidoDespachado {
 export class GestionPedidosComponent implements OnInit {
   reporte: string;
   pedidoTabla: PedidoTablaModel[];
+  nuevoTokenUsuario: string;
+  nuevoTokenRefresh: string;
+  mostrarGestion: boolean = false;
 
   displayedColumns: string[] = [
     "numOrd",
@@ -76,12 +81,21 @@ export class GestionPedidosComponent implements OnInit {
   dataSourceTablaPreparado = new MatTableDataSource<PedidoTablaModel>();
   dataSourceTablaDespachado = new MatTableDataSource<PedidoTablaModel>();
 
-  constructor(private dialog: MatDialog, private service: RestapiService, private changeDetectorRefs: ChangeDetectorRef) {}
+  constructor(private dialog: MatDialog, private service: RestapiService, private changeDetectorRefs: ChangeDetectorRef,    private router: Router) {}
 
   ngOnInit() {
-    
-    this.refresh();
+
+    var x = localStorage.getItem("token");
+    // console.log("token actual:" + x);
+    if (x == null) {
+      this.router.navigate(["/"]);
+      alert("No se tienen tokens");
+    } else {
+      this.refreshTokens();
+    }
   }
+  
+  // ----- tablas de pedido -----
 
   getTablePedidos(numero) {
     console.log("refrescando tabla pedidos");
@@ -126,6 +140,9 @@ export class GestionPedidosComponent implements OnInit {
     );
   }
 
+  // ----- #tablas de pedido -----
+  //-------detalle de pedido--------
+
   detallePedido(pedido:number, estado:number) {
     // console.log("detalle de pedido");
     // console.log("id pedido :"+pedido);
@@ -138,17 +155,76 @@ export class GestionPedidosComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      this.refresh();
+      this.refreshTable();
       console.log("lo cerraste");
       
     });
   }
+   //-------#detalle de pedido--------
 
-  
-  refresh() {
+   //-------refrescar tokens--------
+
+  refreshTokens() {
+    var tokenUsuario = localStorage.getItem("refresh");
+    let resp = this.service.refresh(tokenUsuario);
+    resp.subscribe(
+      (data) => {
+        console.log(data);
+        for (let key in data) {
+          if (key == "refresh ") {
+            this.nuevoTokenRefresh = data[key];
+          }
+          if (key == "authentication ") {
+            this.nuevoTokenUsuario = data[key];
+          }
+          //console.log("key gestion: " + key + ",  value: " + data[key]);
+        }
+        let tokenInfo = this.getDecodedAccessToken(this.nuevoTokenUsuario); // decode token
+        let expireDate = tokenInfo.exp; // get token expiration dateTime
+        //console.log(tokenInfo);
+
+        for (let keyInfo in tokenInfo) {
+          if (keyInfo == "features") {
+            var informacionToken = tokenInfo[keyInfo];
+            for (var i = 0; i < informacionToken.length; i++) {
+              if (informacionToken[i] == "PAGE_USER_MANAGEMENT") {
+                console.log("page user management logged");
+                this.mostrarGestion = true;
+              } else {
+              }
+            }
+          }
+        }
+        localStorage.setItem("token", this.nuevoTokenUsuario);
+        localStorage.setItem("refresh", this.nuevoTokenRefresh);
+        //console.log("Tokens refrescados en gestion ");
+        this.refreshTable();
+      },
+      (error) => {
+        console.log("Timeout token refresh");
+        this.service.removeTokens();
+        this.router.navigate(["/"]);
+      }
+    );
+  }
+
+     //-------#refrescar tokens--------
+
+
+
+  // refrescar tablas con cada movimiento
+  refreshTable() {
     this.getTablePedidos(1);
     this.getTablePedidosPreparando(2);
     this.getTablePedidosPreparado(3);
     this.getTablePedidosDespachado(4);
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
   }
 }
