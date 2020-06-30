@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit,ChangeDetectorRef  } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
 import { PedidoTablaModel } from "../../../../models/PedidoTabla";
 
@@ -76,13 +76,12 @@ export class GestionPedidosComponent implements OnInit {
   dataSourceTablaPreparado = new MatTableDataSource<PedidoTablaModel>();
   dataSourceTablaDespachado = new MatTableDataSource<PedidoTablaModel>();
 
-  constructor(private dialog: MatDialog, private service: RestapiService) {}
+  constructor(private dialog: MatDialog, private service: RestapiService, private changeDetectorRefs: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.getTablePedidos(1);
-    this.getTablePedidosPreparando(2);
-    this.getTablePedidosPreparado(3);
-    this.getTablePedidosDespachado(4);
+    
+    this.refresh();
   }
 
   getTablePedidos(numero) {
@@ -90,6 +89,7 @@ export class GestionPedidosComponent implements OnInit {
     this.service.getTDataTable(numero).subscribe(
       (data: PedidoTablaModel[]) => {
         this.dataSourceTablaPendientes.data = data;
+        this.changeDetectorRefs.detectChanges();
       },
       (error) => {
         console.log("error con la tabla");
@@ -138,6 +138,18 @@ export class GestionPedidosComponent implements OnInit {
         estadoPedido :estado,
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => {
+      this.refresh();
+      console.log("lo cerraste");
+      
+    });
+  }
+
+  
+  refresh() {
+    this.getTablePedidos(1);
+    this.getTablePedidosPreparando(2);
+    this.getTablePedidosPreparado(3);
+    this.getTablePedidosDespachado(4);
   }
 }

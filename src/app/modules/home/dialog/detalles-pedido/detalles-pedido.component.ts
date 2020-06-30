@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { DetallePedido } from "../../../../models/DetallePedido";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Inject } from "@angular/core";
 import { RestapiService } from "../../restapi.service";
 import { Console } from "console";
@@ -25,7 +25,7 @@ export class DetallesPedidoComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private service: RestapiService
+    private service: RestapiService,private dialogRef:MatDialogRef<DetallesPedidoComponent>
   ) {}
   ngOnInit() {
     this.orderIdPedido = this.data.orderIdPedido;
@@ -86,7 +86,7 @@ export class DetallesPedidoComponent implements OnInit {
         //console.log("pedido :" + this.orderIdPedido);
         //console.log("a preparacion");
         this.cambiarEstado(2, this.orderIdPedido);
-        
+        this.dialogRef.close();
         break;
       case 2:
         // console.log("pedido :" + this.orderIdPedido);
@@ -96,17 +96,21 @@ export class DetallesPedidoComponent implements OnInit {
         //var auxDate= new Date(this.getFecharHora.toString());
         this.cambiarconfecha(this.orderIdPedido ,this.estadoPedido );
         console.log(mysqlTimestamp);
+        this.dialogRef.close();
         break;
       case 3:
         // console.log("pedido :" + this.orderIdPedido);
         // console.log("a despachados");
         this.cambiarEstado(4, this.orderIdPedido);
         this.cambiarconfecha(this.orderIdPedido ,this.estadoPedido );
+        this.dialogRef.close();
         break;
       case 4:
         // console.log("pedido :" + this.orderIdPedido);
         // console.log("listo");
         this.cambiarEstado(4, this.orderIdPedido);
+        console.log("Pedido en estado listo");
+        this.dialogRef.close();
         break;
       default:
         // console.log("pedido :" + this.orderIdPedido);
