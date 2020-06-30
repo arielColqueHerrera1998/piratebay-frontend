@@ -4,6 +4,7 @@ import { UsuarioModel } from "./../../models/usuario";
 import { PedidoTablaModel } from "./../../models/PedidoTabla";
 import { DetallePedido } from "./../../models/DetallePedido";
 import { Combobox } from 'src/app/models/Combobox';
+import { Timestamp } from 'rxjs';
 @Injectable({
   providedIn: "root",
 })
@@ -102,6 +103,22 @@ export class RestapiService {
       Authorization: "bearer " + tokenUser,
     });
     return this.http.post<number>("http://localhost:8008/api/v1/cambiarEstado",data,{
+      headers: reqHeader,
+    });
+  }
+
+
+  public siguienteEstadoFecha(orderId:number,estado:number) {
+    var data={
+      "order_id": orderId,
+      "estado_producto": estado
+    }
+    var tokenUser = localStorage.getItem("token");
+    const reqHeader = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "bearer " + tokenUser,
+    });
+    return this.http.post<number>("http://localhost:8008/api/v1/cambiarFecha",data,{
       headers: reqHeader,
     });
   }

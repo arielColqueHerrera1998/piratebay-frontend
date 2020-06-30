@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Inject } from "@angular/core";
 import { RestapiService } from "../../restapi.service";
 import { Console } from "console";
+import * as moment from 'moment';
+import { Timestamp } from 'rxjs';
 
 @Component({
   selector: "app-detalles-pedido",
@@ -19,7 +21,7 @@ export class DetallesPedidoComponent implements OnInit {
   estadoPedido: number;
   selectedValue: string[] = [];
   botonNext: string;
-  respCambioEstado : number;
+  respCambioEstado: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -47,13 +49,10 @@ export class DetallesPedidoComponent implements OnInit {
     );
   }
 
-
-
   obtenerDetalles(orderId: number) {
     switch (this.estadoPedido) {
       case 1:
         this.botonNext = "A preparacion";
-        
         break;
       case 2:
         this.botonNext = "A preparados";
@@ -86,38 +85,69 @@ export class DetallesPedidoComponent implements OnInit {
       case 1:
         //console.log("pedido :" + this.orderIdPedido);
         //console.log("a preparacion");
-        this.cambiarEstado(2,this.orderIdPedido);
+        this.cambiarEstado(2, this.orderIdPedido);
+        
         break;
       case 2:
         // console.log("pedido :" + this.orderIdPedido);
         // console.log("a preparados");
-        this.cambiarEstado(3,this.orderIdPedido);
+        var mysqlTimestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+        this.cambiarEstado(3, this.orderIdPedido);
+        //var auxDate= new Date(this.getFecharHora.toString());
+        this.cambiarconfecha(this.orderIdPedido ,this.estadoPedido );
+        console.log(mysqlTimestamp);
         break;
       case 3:
         // console.log("pedido :" + this.orderIdPedido);
         // console.log("a despachados");
-        this.cambiarEstado(4,this.orderIdPedido);
+        this.cambiarEstado(4, this.orderIdPedido);
+        this.cambiarconfecha(this.orderIdPedido ,this.estadoPedido );
         break;
       case 4:
         // console.log("pedido :" + this.orderIdPedido);
         // console.log("listo");
-        this.cambiarEstado(4,this.orderIdPedido);
+        this.cambiarEstado(4, this.orderIdPedido);
         break;
       default:
-        console.log("pedido :" + this.orderIdPedido);
-        console.log("error en data");
+        // console.log("pedido :" + this.orderIdPedido);
+        // console.log("error en data");
         break;
     }
   }
 
-  cambiarEstado(estado :number , pedido :number) {
-    this.service.cambiarEstadoPedido(estado,pedido).subscribe(
+  cambiarEstado(estado: number, pedido: number) {
+    this.service.cambiarEstadoPedido(estado, pedido).subscribe(
       (data) => {
-        console.log("data : "+data);
+        console.log("data : " + data);
       },
       (error) => {
         console.log("error al cambiar de estado");
       }
     );
   }
+
+  cambiarconfecha(pedido: number,orderestado :number) {
+    this.service.siguienteEstadoFecha(pedido,orderestado).subscribe(
+      (data) => {
+        console.log("data : " + data);
+      },
+      (error) => {
+        console.log("error al cambiar de estado fecha");
+      }
+    );
+  }
+
+  // getFecharHora() {
+  //   var newDate = new Date().toLocaleString();
+  //   var date = newDate.split(" ");
+  //   var fecha = date[0];
+  //   var hora = date[1];
+  //   //console.log("time : " + newDate);
+  //   var auxFecha = fecha.split("/");
+  //   // var nuevaFecha = auxFecha[2] + "/" + auxFecha[1] + "/" + auxFecha[0];
+  //   //console.log("nueva fecha : " + nuevaFecha);
+  //   var nuevoTime = (auxFecha[2] + "-0" + auxFecha[1] + "-" + auxFecha[0] + "T" + hora+".000000");
+  //   //console.log("nuevo time : " + nuevoTime);
+  //   return nuevoTime;
+  // }
 }
